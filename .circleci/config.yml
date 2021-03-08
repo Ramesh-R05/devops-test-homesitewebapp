@@ -1,8 +1,12 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+###
+
 orbs:
   welcome: circleci/welcome-orb@0.4.1
+
+###
 
 jobs:
   job-one:
@@ -12,7 +16,12 @@ jobs:
         name: "Ubuntu Step 1 Hello"
         command: echo "Hello World"
 
-workflows:  welcome:
-     jobs:
-       - job-one
-       - welcome/run
+###
+
+workflows:
+  welcome:
+    jobs:
+      - job-one
+      - welcome/run
+
+### End ###
