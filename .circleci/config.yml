@@ -28,7 +28,7 @@ jobs:
           command: node --version
       - run:
           name: "Cat Version"
-          command: find / -type f -name version.js -ls 2>>/dev/null
+          command: echo "Version JS"# find / -type f -name version.js -ls 2>>/dev/null
       - run:
           name: "apt-get NodeJS 10.19.0" # apt-get install nodejs=
           command: apt-get install nodejs=10.19.0
