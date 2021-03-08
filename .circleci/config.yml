@@ -10,11 +10,12 @@ orbs:
 
 jobs:
   job-one:
-    image: ubuntu-1604:202010-01
-  steps:
-    - run:
-        name: "Ubuntu Step 1 Hello"
-        command: echo "Hello World"
+    machine:
+      image: ubuntu-1604:202010-01
+    steps:
+      - run:
+          name: "Ubuntu Step 1 Hello"
+          command: echo "Hello World"
 
 ###
 
