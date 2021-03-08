@@ -16,6 +16,13 @@ jobs:
       - run:
           name: "Ubuntu Step 1 Hello"
           command: echo "Hello World"
+      - run:
+          name: "Node version"
+          command: node --version
+      - run:
+          name: "NPM Install"
+          command: npm install
+
 
 ###
 
