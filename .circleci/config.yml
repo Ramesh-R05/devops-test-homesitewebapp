@@ -25,6 +25,10 @@ jobs:
       - run:
           name: "NPM set" # NPM set
           command: npm set @bxm:registry http://npm.digital.bauer-media.net.au
+      - run:
+          name: "Node Re-Build" # Node Re-build
+          command: npm rebuild node-sass --force
+
 
 ###
 
