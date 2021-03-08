@@ -18,8 +18,8 @@ jobs:
     image: ubuntu-1604:202010-01
   steps:
     - run:
-        - name: Ubuntu Step 1 Hello
-        - command: echo "Hello World"
+        name: Ubuntu Step 1 Hello
+        command: echo "Hello World"
       
       
 #
