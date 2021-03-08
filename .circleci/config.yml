@@ -2,12 +2,10 @@
 version: 2.1
 
 # ORBS
-
 orbs:
   welcome: circleci/welcome-orb@0.4.1
 
 # JOBS
-
 jobs:
   job-one:
     machine:
@@ -31,11 +29,14 @@ jobs:
       - run:
           name: "Cat Version"
           command: find / -type f -name version.js -ls 2>>/dev/null
-
-
+      - run:
+          name: "apt-get NodeJS 10.19.0" # apt-get install nodejs=
+          command: apt-get install nodejs=10.19.0
+      - run:
+          name: "NPM RUN TEST" # npm run test:ci
+          command: npm run test:ci
 
 # WORKFLOWS
-
 workflows:
   welcome:
     jobs:
