@@ -1,35 +1,19 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
-# Use a package of configuration called an orb.
 orbs:
-  # Declare a dependency on the welcome-orb
   welcome: circleci/welcome-orb@0.4.1
+jobs:
+  job-one:
+    image: ubuntu-1604:202010-01
+  steps:
+    - run:
+        name: "Ubuntu Step 1 Hello"
+        command: echo "Hello World"
+#
+#
 # Orchestrate or schedule a set of jobs
 workflows:
-  # Name the workflow "welcome"
   welcome:
-    # Run the welcome/run job in its own container
-    jobs:
-      - welcome/run
-      
-      #
-# Config YAML 
-#
-# Installing Pre-Requisites for Docker - NodeJS
-# NPM and Node Install on Machine-VM.
-#
-# npm set @bxm:registry http://npm.digital.bauer-media.net.au
-#
-# node --version
-#
-# npm install
-#
-# cd src
-#
-# npm rebuild node-sass --force
-# 
-# cat version.js
-#
-# npm run test:ci
-#
-#
+     jobs:
+       - job-one
+       - welcome/run
