@@ -15,22 +15,22 @@ jobs:
     steps:
       - run:
           name: "UBUNTU | NPM | NODEJS"
-          command: echo "UBUNTU | NPM | NODEJS"
+          command: echo "UBUNTU | NPM | NODEJS"; pwd
       - run:
-          name: "NPM set" # NPM set
+          name: "NPM Set" # NPM Set
           command: npm set @bxm:registry http://npm.digital.bauer-media.net.au
       - run:
-          name: "NPM Install"
+          name: "NPM Install" # "NPM Install"
           command: npm install
       - run:
           name: "Node Re-Build" # Node Re-build
           command: npm rebuild node-sass --force
       - run:
-          name: "Node Version"
+          name: "Node Version" # "Node Version"
           command: node --version
       - run:
           name: "Cat Version"
-          command: cat version.js
+          command: find / -type f -name version.js -ls
 
 
 
