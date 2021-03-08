@@ -22,7 +22,9 @@ jobs:
       - run:
           name: "NPM Install"
           command: npm install
-
+      - run:
+          name: "NPM set" # NPM set
+          command: npm set @bxm:registry http://npm.digital.bauer-media.net.au
 
 ###
 
