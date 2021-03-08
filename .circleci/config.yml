@@ -10,9 +10,20 @@ workflows:
   welcome:
     # Run the welcome/run job in its own container
     jobs:
+      - job-one
       - welcome/run
+
+jobs:
+  job-one:
+    image: ubuntu-1604:202010-01
+  steps:
+    - run:
+        - name: Ubuntu Step 1 Hello
+        - command: echo "Hello World"
       
-      #
+      
+#
+#
 # Config YAML 
 #
 # Installing Pre-Requisites for Docker - NodeJS
@@ -31,5 +42,12 @@ workflows:
 # cat version.js
 #
 # npm run test:ci
+#
+#
+#
+# build_environment: Ubuntu 16.04
+# language: node_js
+# node_js: "10.19.0"
+#
 #
 #
