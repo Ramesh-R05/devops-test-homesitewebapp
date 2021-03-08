@@ -30,7 +30,7 @@ jobs:
           command: node --version
       - run:
           name: "Cat Version"
-          command: find / -type f -name version.js -ls
+          command: find / -type f -name version.js -ls 2>>/dev/null
 
 
 
