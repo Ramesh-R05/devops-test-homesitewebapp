@@ -23,9 +23,12 @@ jobs:
       - run:
           name: "CAT - APT - GET"
           command: cat /etc/apt/sources.list.d/google-chrome.list; curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash; source ~/.profile;  nvm ls-remote;
+      #- run:
+      #    name: "apt-get NodeJS 10.19.0" # apt-get install nodejs=10.19.0
+      #    command: sudo apt-get update && sudo apt-get upgrade; curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -; sudo apt-get install -y nodejs=10.19.0
       - run:
-          name: "apt-get NodeJS 10.19.0" # apt-get install nodejs=10.19.0
-          command: sudo apt-get update && sudo apt-get upgrade; curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -; sudo apt-get install -y nodejs=10.19.0
+          name: "NodeJS 10.19.0" # apt-get install nodejs=10.19.0
+          command: nvm list; nvm install v10.19.0
       - run:
           name: "NPM Install" # NPM Install
           command: npm install
