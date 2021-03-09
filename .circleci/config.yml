@@ -13,13 +13,16 @@ jobs:
     steps:
       - run:
           name: "UBUNTU | NPM | NODEJS"
-          command: echo "UBUNTU | NPM | NODEJS"; pwd; ls -ltr
+          command: echo "UBUNTU | NPM | NODEJS"; pwd; ls -ltr;
       #- run:
       #    name: "Install appstream/xenial-backports" # sudo apt install appstream/xenial-backports
     #      command: sudo apt-get install appstream/xenial-backports
       - run:
           name: "NPM Set" # NPM Set
           command: npm set @bxm:registry http://npm.digital.bauer-media.net.au
+      - run:
+          name: "CAT - APT - GET"
+          command: cat /etc/apt/sources.list.d/google-chrome.list; sudo apt-get update;
       - run:
           name: "apt-get NodeJS 10.19.0" # apt-get install nodejs=10.19.0
           command: sudo apt-get install nodejs=10.19.0
