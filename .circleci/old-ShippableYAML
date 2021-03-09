@@ -26,3 +26,7 @@ push:
   - if [ $IS_PULL_REQUEST == false ]; then docker push $IMAGE:latest; fi
   - if [ $IS_PULL_REQUEST == false ]; then docker rmi $IMAGE:$BRANCH_NAME; fi # Clear all docker images after completion
   - if [ $IS_PULL_REQUEST == false ]; then docker rmi $IMAGE:latest; fi # Clear all docker images after completion
+
+# NEW
+# nvm is already installed in /opt/circleci/.nvm, trying to update using git
+# https://raw.githubusercontent.com/creationix/nvm/master/install.sh

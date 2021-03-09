@@ -43,7 +43,7 @@ jobs:
           name: "NPM Set" # NPM Set
           command: npm set @bxm:registry http://npm.digital.bauer-media.net.au
 
-
+# nvm is already installed in /opt/circleci/.nvm, trying to update using git
 # WORKFLOWS
 workflows:
   welcome:
