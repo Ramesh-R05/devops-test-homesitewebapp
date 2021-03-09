@@ -18,8 +18,8 @@ jobs:
           pwd; ls; id;
           curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash;
           source ~/.profile
-          nvm install v10.19.0; nvm use v10.19.0; id
-          nvm list
+          nvm install v10.19.0
+          nvm use v10.19.0; id          
           node --version
 
 
