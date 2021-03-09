@@ -14,9 +14,9 @@ jobs:
       - run:
           name: "UBUNTU | NPM | NODEJS"
           command: echo "UBUNTU | NPM | NODEJS"; pwd
-      - run: 
+      - run:
           name: "Install appstream/xenial-backports" # sudo apt install appstream/xenial-backports
-          command: sudo apt install appstream/xenial-backports
+          command: sudo apt-get install appstream/xenial-backports
       - run:
           name: "NPM Set" # NPM Set
           command: npm set @bxm:registry http://npm.digital.bauer-media.net.au
@@ -28,13 +28,13 @@ jobs:
           command: npm install
       - run:
           name: "NPM NODE Re-Build" # Node Re-build
-          command: npm rebuild node-sass --force   
+          command: npm rebuild node-sass --force
       - run:
           name: "NPM Version" # NPM Version
-          command: npm --version              
+          command: npm --version
       - run:
           name: "Node Version" # Node Version
-          command: node --version                    
+          command: node --version
       - run:
           name: "Cat Version"
           command: echo "Version JS" # find / -type f -name version.js -ls 2>>/dev/null
