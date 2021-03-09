@@ -14,9 +14,9 @@ jobs:
       - run:
           name: "UBUNTU | NPM | NODEJS"
           command: echo "UBUNTU | NPM | NODEJS"; pwd
-      - run:
-          name: "Install appstream/xenial-backports" # sudo apt install appstream/xenial-backports
-          command: sudo apt-get install appstream/xenial-backports
+      #- run:
+      #    name: "Install appstream/xenial-backports" # sudo apt install appstream/xenial-backports
+    #      command: sudo apt-get install appstream/xenial-backports
       - run:
           name: "NPM Set" # NPM Set
           command: npm set @bxm:registry http://npm.digital.bauer-media.net.au
