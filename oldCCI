@@ -7,41 +7,46 @@ orbs:
 
 # JOBS
 jobs:
-
   job-one:
     machine:
       image: ubuntu-1604:202010-01
-    working_directory: ~/homes-site
     steps:
-      - checkout
       - run:
           name: "UBUNTU | NPM | NODEJS"
-          command: echo "UBUNTU | NPM | NODEJS";
+          command: echo "UBUNTU | NPM | NODEJS"; pwd; ls -ltr;
       - run:
-          name: "list path and dir"
-          command: pwd; ls; id;
+          name: "NPM Set" # NPM Set
+          command: npm set @bxm:registry http://npm.digital.bauer-media.net.au
       - run:
-          name: "Curl for NVM | NPM | NodeJS" #NVM Set
+          name: "Curl for NVM | NPM | NodeJS"
           command: curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash; source ~/.profile;
       - run:
           name: "NVM Install for NodeJS 10.19.0" # apt-get install nodejs=10.19.0
-          command: source ~/.profile; nvm list; nvm install v10.19.0; nvm use v10.19.0
+          command: source ~/.profile; nvm list; nvm install v10.19.0;
+    #  - run:
+    #      name: "NPM Install" # NPM Install
+  #        command: npm install
+  #    - run:
+#          name: "NPM NODE Re-Build" # Node Re-build
+#          command: npm rebuild node-sass --force
       - run:
           name: "NPM Version" # NPM Version
           command: npm --version
       - run:
           name: "Node Version" # Node Version
           command: node --version
-     # NPM Setting
       - run:
-          name: "NPM Set" # NPM Set
-          command: npm set @bxm:registry http://npm.digital.bauer-media.net.au
-
+          name: "Cat Version"
+          command: echo "Version.JS" # find / -type f -name version.js -ls 2>>/dev/null
+#      - run:
+#          name: "NPM RUN TEST" # npm run test:ci
+#          command: npm run test:ci
 
 # WORKFLOWS
 workflows:
   welcome:
     jobs:
       - job-one
+      - welcome/run
 
 ### End ###
