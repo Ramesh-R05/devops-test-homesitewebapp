@@ -17,14 +17,14 @@ jobs:
       - run:
           name: "NPM Set" # NPM Set
           command: npm set @bxm:registry http://npm.digital.bauer-media.net.au
-      - run:
-          name: "apt-get NodeJS 10.19.0" # apt-get install nodejs=10.19.0
-          command: sudo apt-get install nodejs=10.19.0
+#      - run:
+#          name: "apt-get NodeJS 10.19.0" # apt-get install nodejs=10.19.0
+#          command: sudo apt-get install nodejs=10.19.0
       - run:
           name: "NPM Install" # "NPM Install"
           command: npm install
       - run:
-          name: "Node Re-Build" # Node Re-build
+          name: "NPM NODE Re-Build" # Node Re-build
           command: npm rebuild node-sass --force   
       - run:
           name: "NPM Version" # "Node Version"
