@@ -21,10 +21,11 @@ jobs:
           command: pwd; ls; id;
       - run:
           name: "Curl for NVM | NPM | NodeJS" # NVM Set
-          command: curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash; source ~/.profile;
+          command: curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash; # source ~/.profile;
       - run:
           name: "NVM Install for NodeJS 10.19.0" # NVM install nodejs=10.19.0
-          command: source ~/.profile; nvm install v10.19.0; nvm use v10.19.0; id;
+          command: nvm install v10.19.0; nvm use v10.19.0; id;
+          #command: source ~/.profile; nvm install v10.19.0; nvm use v10.19.0; id;
       - run:
           name: "Cat Source Profile"
           command: cat ~/.profile
