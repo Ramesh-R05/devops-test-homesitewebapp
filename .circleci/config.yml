@@ -13,6 +13,9 @@ jobs:
     working_directory: ~/homes-site
     steps:
       - checkout
+      - run: |
+          echo "UBUNTU | NPM | NODEJS"
+          nvm list
       - run:
           name: "UBUNTU | NPM | NODEJS"
           command: echo "UBUNTU | NPM | NODEJS";
@@ -43,7 +46,7 @@ jobs:
           name: "NPM Set" # NPM Set
           command: npm set @bxm:registry http://npm.digital.bauer-media.net.au
 
-# nvm is already installed in /opt/circleci/.nvm, trying to update using git
+
 # WORKFLOWS
 workflows:
   welcome:
