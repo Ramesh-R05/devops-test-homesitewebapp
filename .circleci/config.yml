@@ -25,6 +25,9 @@ jobs:
       - run:
           name: "NVM Install for NodeJS 10.19.0" # NVM install nodejs=10.19.0
           command: source ~/.profile; nvm install v10.19.0; nvm use v10.19.0; id;
+       -run:
+          name: "Cat Source Profile"
+          command: cat ~/.profile
       - run:
           name: "NVM List / Un-Install" # nvm Un-Install
           command: id; nvm list; nvm uninstall v12.18.4;
