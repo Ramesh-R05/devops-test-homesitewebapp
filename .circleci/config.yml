@@ -4,7 +4,6 @@ version: 2.1
 # ORBS
 orbs:
   welcome: circleci/welcome-orb@0.4.1
-
 # JOBS
 jobs:
 
@@ -21,11 +20,14 @@ jobs:
           name: "list path and dir"
           command: pwd; ls; id;
       - run:
-          name: "Curl for NVM | NPM | NodeJS" #NVM Set
+          name: "Curl for NVM | NPM | NodeJS" # NVM Set
           command: curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash; source ~/.profile;
       - run:
-          name: "NVM Install for NodeJS 10.19.0" # apt-get install nodejs=10.19.0
-          command: source ~/.profile; nvm list; nvm install v10.19.0; nvm use v10.19.0
+          name: "NVM Install for NodeJS 10.19.0" # NVM install nodejs=10.19.0
+          command: source ~/.profile; nvm install v10.19.0; nvm use v10.19.0
+      - run:
+          name: "NVM List / Un-Install" # nvm Un-Install
+          command: nvm list; nvm uninstall v12.18.4;
       - run:
           name: "NPM Version" # NPM Version
           command: npm --version
