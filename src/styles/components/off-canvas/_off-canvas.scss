@@ -1,0 +1,49 @@
+.off-canvas {
+  position: relative;
+  padding: 0;
+  background-color: $color-grey-darker;
+  
+  &__content-wrapper {
+    pointer-events: inherit;
+    padding: $column-gutter / 2;
+    overflow: scroll;
+    height: 100%;
+    position: absolute; 
+    -webkit-overflow-scrolling: touch;
+
+    @media #{$medium-up} {
+      height: 100%;
+      overflow: auto;
+      width: $offcanvas-tablet-width;
+      padding: 52px 58px;
+    }
+  }
+
+  &__overlay {
+    background-color: $color-transparent-white;
+  }
+
+  .close-btn {
+    @include flat-button;
+    background-color: transparent;
+    line-height: 44px;
+    position: absolute;
+    top: 24px;
+    right: 16px;
+    width: 44px;
+
+    svg {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    path {
+        fill: $color-primary;
+    }
+  }
+
+  &-wrapper {
+    position: fixed;
+    top: 0;
+  }
+}

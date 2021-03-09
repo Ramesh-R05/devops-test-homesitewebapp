@@ -1,0 +1,55 @@
+.article-section .gallery-section .article__header .article {
+    &__date-created {
+        margin-bottom: 10px;
+        @media #{$medium-up} {
+            margin-bottom: 30px;
+        }
+    }
+    &__image-count {
+        margin: 0 2px 30px 0;
+        display: block;
+        @media #{$medium-up} {
+            display: inline-block;
+        }
+    }
+}
+
+.gallery-section {
+	.content-body {
+		font-size: 16px;
+		color: #999;
+	}
+
+	.content-body__related-content {
+		padding-bottom: 25px !important;
+	}
+
+	.article__summary {
+		color: #999;
+		font-size: 18px;
+	}
+
+	.gallery__caption p {
+		font-size: 14px;
+		color: $color-grey;
+	}
+
+	.gallery__photo-credit {
+		font-size: 14px;
+		font-style: italic;
+	}
+
+	.gallery__item-count {
+		font-size: 14px;
+	}
+
+	.gallery__item-content {
+		padding-left: 15px;
+		padding-right: 15px;
+
+		@media #{$large-up} {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+}

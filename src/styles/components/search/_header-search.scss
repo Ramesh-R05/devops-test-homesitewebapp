@@ -1,0 +1,139 @@
+@mixin header-search-hide-after($root: '.header-search') {
+    #{$root}::after {
+        @media #{$medium-up} {
+            display: none;
+        }
+    }
+}
+
+.header-search {
+    $self: &;
+    display: block;
+    padding: 5px 0;
+    position: relative;
+    margin-left: 15px;
+
+    @media #{$medium-up} {
+        background-color: transparent;
+        top: 0;
+        margin-left: 0;
+        margin-right: 20px;
+    }
+
+    @media #{$large-up} {
+        margin: 0 35px 0 0;
+    }
+
+    &__icon-container {
+        width: 20px;
+    }
+
+    &__icon {
+        width: 100%;
+        padding: 0;
+        background: none;
+        border: 0;
+        outline: 0;
+        margin-top: 10px;
+
+        path {
+            fill: $color-darker-blue;
+        }
+    }
+
+    &__svg {
+        fill: $color-darker-blue;
+    }
+
+    &__input {
+        display: none;
+        position: absolute;
+        background-color: $color-white;
+        color: $color-black-origin;
+        top: $header-height-small;
+        right: 0;
+        width: 317px;
+
+        @media #{$medium-up} {
+            top: $header-menu-height-desktop;
+            width: 430px;
+        }
+    }
+
+    &__form {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    &__text-input {
+        width: 100%;
+        flex: 1;
+        font-family: $font-family-sans-serif-primary;
+        border: 1px solid $color-black-origin;
+        text-transform: uppercase;
+        padding: 4px 8px;
+
+        &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: $color-black-origin;
+        }
+
+        &::-moz-placeholder { /* Firefox 19+ */
+            color: $color-black-origin;
+        }
+
+        &:-ms-input-placeholder { /* IE 10+ */
+            color: $color-black-origin;
+        }
+
+        &:-moz-placeholder { /* Firefox 18- */
+            color: $color-black-origin;
+        }
+    }
+
+    &__submit-button {
+        flex: 0 0 auto;
+    }
+
+    &::after {
+        display: none;
+
+        @media #{$medium-up} {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 18px;
+            border-left: solid 1px $color-section-separator;
+            position: absolute;
+            left: 29px;
+            top: 15px;
+        }
+
+        @media #{$large-up} {
+            left: 38px;
+        }
+    }
+
+    &--is-open {
+        right: 0;
+        background-color: transparent;
+        top: 0;
+
+        #{$self}__input {
+            display: block;
+            // Workaround until the styling is refactored in future
+            top: $header-menu-height-desktop - 1;
+        }
+
+        #{self}__icon {
+
+            path {
+                fill: $color-white;
+            }
+        }
+    }
+
+    &--push-right {
+        margin-left: auto;
+    }
+}

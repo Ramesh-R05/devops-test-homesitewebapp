@@ -1,0 +1,92 @@
+.home-section {
+    background-color: $color-white;
+    margin: 0 auto;
+    max-width: 1024px;
+
+    &__featured {
+        .ad {
+            &--section-middle-leaderboard {
+                margin-top: $standard-spacer-height;
+
+                @media #{$medium-up} {
+                    margin-top: 1.5 * $standard-spacer-height;
+                }
+
+                @media #{$large-up} {
+                    margin-top: 2 * $standard-spacer-height;
+                }
+            }
+
+            &--section-bottom-leaderboard {
+                padding-bottom: $standard-spacer-height;
+
+                @media #{$medium-up} {
+                    padding-bottom: 0;
+                }
+            }
+        }
+    }
+
+    &__hero-teaser {
+        display: inline-block;
+        margin-bottom: 30px;
+
+        @media #{$medium-up} {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        @media #{$large-up} {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+    
+    &__grid-teaser {
+        @include teaser-img-top;
+        @include teaser-hide-summary;
+
+        @media #{$medium-up} {                    
+            @include grid-column(6);
+            @include clear-left(odd);
+        }
+    }
+
+    &__polar-teaser {
+        @media #{$medium-up} {            
+            @include grid-column(6);
+        }            
+    }
+
+    .fixed-column--sticky {
+        @media #{$large-up} {
+            @include grid-column(4);
+        }
+    }
+
+    .bottom-teasers {
+
+        .ad--section-mrec {
+            @media #{$medium-up} {
+                @include grid-column(6);
+            }
+        }
+    }
+}
+
+/* give me locally scoped classnames ie: home-section__top-mrec */
+.home-section-top-mrec-1 {    
+    margin-bottom: $standard-spacer-height;
+
+    @media #{$medium-up} {
+        @include grid-column(6);
+    }    
+}
+
+.home-section-top-mrec-2 {
+    margin-bottom: 0;
+
+    @media #{$medium-up} {
+        @include grid-column(6);
+    }
+}

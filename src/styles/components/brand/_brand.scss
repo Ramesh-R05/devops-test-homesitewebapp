@@ -1,0 +1,129 @@
+$theme-colors-dashed: (
+    'homes-plus': ($color-homes-plus, $color-homes-plus-light),
+    'real-living': ($color-real-living, $color-real-living-light),
+    'belle': ($color-belle, $color-belle-light),
+    'australian-house-and-garden': ($color-house-and-garden, $color-house-and-garden-light),
+    'homes-to-love': ($color-primary, $color-primary-light),
+    'inside-out': ($color-inside-out, $color-inside-out-light),
+    'country-style': ($color-country-style, $color-country-style-light),
+    'homelife': ($color-homelife, $color-homelife-light),
+);
+
+
+.brand-section {
+    background: $color-white;
+    
+    &__header-logo {
+        max-width: 1024px;
+        margin: 0 auto;
+    }
+
+    &__logo-wrapper {
+        position: relative;
+        z-index: $z-index-1;
+        margin-bottom: 20px;
+        text-align: center;        
+    
+        @media #{$medium-up} {
+            margin: 0 0 40px;
+            background-color: $color-white;
+        }
+    
+        @media #{$large-up} {
+            padding-top: 15px;
+            margin: 0;
+            padding-bottom: 42px;
+        }
+    }
+
+    &__logo-image {
+        height: 100%;
+        max-height: 100px;
+        width: 60%;
+    }
+
+    &__top {
+        margin: 0 auto;
+        max-width: 1024px;        
+    }
+
+    &__hero-teaser {
+        display: inline-block;
+        margin-bottom: 30px;
+    }
+
+    &__grid-item {
+        @media #{$medium-up} {
+            @include clear-left(even);
+        }
+
+        @media #{$large-up} {
+            @include clear-left(odd);
+        }
+
+        @media #{$medium-only} {
+            &:last-of-type {
+                clear: right;
+            }
+        }
+    }
+
+    &__grid-teaser {
+        @include teaser-img-top;
+        @include teaser-hide-summary;
+    }
+
+    &__grid-ad {
+        @include grid-column(12);
+
+        @media #{$medium-up} {
+            @include grid-column(6);
+        }
+    }
+
+    &__top-fullwidth-ad {
+        @media #{$large-up} {
+            margin-bottom: 40px;
+        }
+    }
+
+    &__bottom {
+        padding-top: 0;
+        margin-top: 10px;        
+    }
+
+    @each $brand, $color in $theme-colors-dashed {
+        $brand-primary: nth($color, 1);
+        $brand-hover: nth($color, 2);
+        
+        
+        &--#{$brand} {
+            .button {
+                background: $brand-primary;
+
+                &:hover {
+                    background: $brand-hover;
+                }
+            }
+    
+            .social-links .social-icon svg path {
+                fill: $brand-primary;
+
+                &:hover {
+                    fill: $brand-hover;
+                }
+            }
+        }
+    }
+
+    // Overwrite load more button color
+    .load-more {
+        .button {
+            background: $color-primary;
+
+            &:hover {
+                background: $color-primary-light;
+            }
+        }
+    }
+}

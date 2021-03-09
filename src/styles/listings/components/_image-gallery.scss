@@ -1,0 +1,80 @@
+.listing-image-gallery {
+  $root: &;
+
+  .image-gallery-left-nav,
+  .image-gallery-right-nav {
+    font-size: 3em;
+
+    @media #{$medium-up} {
+      font-size: 4em;
+    }
+
+    &:hover {
+      &:before {
+        color: $listings-gallery-nav-color;
+      }
+    }
+
+    &:before {
+      text-shadow: none;
+      color: $listings-gallery-nav-hover-color;
+    }
+  }
+
+  &--portrait {
+    width: 100%;
+    height: auto;
+    
+    @media #{$medium-up} {
+      max-width: 503px;
+      max-height: 803px;
+      min-height: 803px; 
+    }    
+  }
+
+  &--landscape {
+    width: 100%;    
+
+    #{$root}__image {
+      max-height: 365px;
+
+      @media #{$medium-up} {
+        max-height: 635px;        
+      }
+    }
+  }
+  
+  &--full-width {
+
+    @media #{$large-up} {
+      max-width: 1305px;
+      height: auto;
+    }
+
+    .image-gallery-slides {
+
+        @media #{$large-up} {
+            overflow: visible;
+        }
+    }
+
+    .image-gallery-slide {
+
+        &.left {
+
+            @media #{$large-up} {
+                left: -22px;
+                opacity: 0.25;
+            }
+        }
+
+        &.right {
+
+            @media #{$large-up} {
+                left: 22px;
+                opacity: 0.25;
+            }
+        }
+    }    
+  }
+}
