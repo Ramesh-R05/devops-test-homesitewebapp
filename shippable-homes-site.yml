@@ -1,0 +1,115 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+
+@Ramesh-R05
+bauerxcelmedia
+/
+homes-site
+Private
+6
+00
+Code
+Pull requests
+13
+Actions
+Security
+23
+Insights
+Settings
+homes-site/shippable.yml
+@monefin
+monefin major node upgrade 10.19.0 (#835)
+Latest commit 340babf on Mar 30, 2020
+ History
+ 7 contributors
+@rlennox-bauer@monefin@NickProdromou@luyi985@heardy@db@Abhibxm
+We found potential security vulnerabilities in your dependencies.
+You can see this message because you have been granted access to Dependabot alerts for this repository.
+
+68 lines (62 sloc)  2.35 KB
+
+# language setting
+build_environment: Ubuntu 16.04
+language: node_js
+node_js: "10.19.0"
+
+runtime:
+  nodePool: custom__x86_64__Ubuntu_16_04
+
+env:
+  global:
+    - APP_KEY=homes-site
+    - APP_STUBBED=true
+    - IMAGE=317367993082.dkr.ecr.ap-southeast-2.amazonaws.com/homes-site
+    - BRANCH_NAME="$(sed 's/\//-/g' <<< $BRANCH).$BUILD_NUMBER" # need to replace '/' in the branch name with '-'
+    - BRANCH="$(echo $BRANCH)" # expose branch name globaly
+
+build:
+  cache: true
+  cache_dir_list:
+    - $SHIPPABLE_BUILD_DIR/src/node_modules
+  ci:
+    - npm set @bxm:registry http://npm.digital.bauer-media.net.au
+    - node --version
+    - mkdir -p ./shippable/testresults ./shippable/codecoverage ./shippable/buildoutput
+    - cd src
+    - rm -rf node_modules
+    - rm package-lock.json
+    - npm install
+    - npm rebuild node-sass --force
+    - echo "module.exports={buildNumber:'$BRANCH_NAME'};" > version.js
+    - cat version.js
+    - npm run test:ci
+    - ./node_modules/.bin/babel-istanbul report cobertura --dir  ./../shippable/codecoverage/
+    - NODE_ENV=production npm run build
+    - cd ..
+    - if [ $IS_PULL_REQUEST == false ]; then docker build -f Dockerfile.ecs -t $IMAGE:$BRANCH_NAME .; fi
+    - if [ $IS_PULL_REQUEST == false ]; then docker tag $IMAGE:$BRANCH_NAME $IMAGE:latest; fi
+    - if [ "$BRANCH" == "master" ] && [ $IS_PULL_REQUEST == false ]; then echo "versionName=$BRANCH_NAME" >> $JOB_STATE/homes-site-img-master.env; fi
+    - if [ "$BRANCH" != "master" ]; then echo "versionName=$BRANCH_NAME" >> $JOB_STATE/homes-site-img-branch.env; fi
+  push:
+    - if [ $IS_PULL_REQUEST == false ]; then docker push $IMAGE:$BRANCH_NAME; fi
+    - if [ $IS_PULL_REQUEST == false ]; then docker push $IMAGE:latest; fi
+    - if [ $IS_PULL_REQUEST == false ]; then docker rmi $IMAGE:$BRANCH_NAME; fi # Clear all docker images after completion
+    - if [ $IS_PULL_REQUEST == false ]; then docker rmi $IMAGE:latest; fi # Clear all docker images after completion
+
+branches:
+  only:
+    - master
+
+#Integration and Notifications
+integrations:
+  hub:
+    - integrationName: ECR-digital-services-AWS
+      type: ecr
+      region: ap-southeast-2
+
+  notifications:
+    - integrationName: slack-bauerxcelmedia
+      type: slack
+      recipients:
+        - "au-shippable"
+      branches:
+        only:
+          - master
+          - feature/*
+          - fix/*
+      on_success: always
+      on_failure: always
+© 2021 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About

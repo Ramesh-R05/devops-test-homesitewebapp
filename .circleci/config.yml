@@ -23,6 +23,7 @@ jobs:
           nvm use v10.19.0; id
           node --version
           npm --version
+          npm set @bxm:registry http://npm.digital.bauer-media.net.au
           npm install
           npm rebuild node-sass --force
           npm run test:ci
