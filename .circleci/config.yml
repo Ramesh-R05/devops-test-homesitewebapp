@@ -38,12 +38,12 @@ jobs:
 
           echo "### Setting NPM Registry as BXM ###"
           npm set @bxm:registry http://npm.digital.bauer-media.net.au
-          NODE_ENV = production npm run build
 
           echo "### NPM Install src/package.json # Node_Rebuild # Node_Test ###"
           npm install
           npm rebuild node-sass --force
           npm run test:ci
+          NODE_ENV=production npm run build
 
 # WORKFLOWS
 
