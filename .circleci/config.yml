@@ -15,12 +15,19 @@ jobs:
       - checkout
       - run: |
           echo "UBUNTU | NPM | NODEJS"
-          pwd; ls; id;
-          curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash;
+          pwd; ls -ltr; id;
+          cd src
+          curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
           source ~/.profile
           nvm install v10.19.0
-          nvm use v10.19.0; id          
+          nvm use v10.19.0; id
           node --version
+          npm --version
+          npm install
+          npm rebuild node-sass --force
+          npm run test:ci
+
+
 
 
 # WORKFLOWS
