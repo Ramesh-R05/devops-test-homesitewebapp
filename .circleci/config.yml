@@ -14,11 +14,11 @@ jobs:
     machine:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
-    commands:
-      - description: "UBUNTU | NPM | NODEJS"
     steps:
       - checkout
-      - run: |
+      - run:
+          name: "UBUNTU | NVM | NPM | NODEJS"
+          command: |
           echo "UBUNTU | NPM | NODEJS"
 
           echo "### Switching to src dir (/home/circleci/homes-site/src) ### "
