@@ -14,10 +14,10 @@ jobs:
     machine:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
+    commands:
+      - description: "UBUNTU | NPM | NODEJS"
     steps:
       - checkout
-  commands:
-      description: "UBUNTU | NPM | NODEJS"
       - run: |
           echo "UBUNTU | NPM | NODEJS"
 
