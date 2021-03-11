@@ -43,7 +43,7 @@ jobs:
           npm install
           npm rebuild node-sass --force
           npm run test:ci
-          NODE_ENV = production npm run build
+          NODE_ENV=production npm run build 
 
 # WORKFLOWS
 
