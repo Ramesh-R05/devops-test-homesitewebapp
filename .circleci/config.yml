@@ -16,9 +16,7 @@ jobs:
     working_directory: ~/homes-site
     steps:
       - checkout
-      - run:
-          name: "UBUNTU | NVM | NPM | NODEJS"
-          command: |
+      - run: |
           echo "UBUNTU | NPM | NODEJS"
 
           echo "### Switching to src dir (/home/circleci/homes-site/src) ### "
