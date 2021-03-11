@@ -16,6 +16,8 @@ jobs:
     working_directory: ~/homes-site
     steps:
       - checkout
+  commands:
+      description: "UBUNTU | NPM | NODEJS"
       - run: |
           echo "UBUNTU | NPM | NODEJS"
 
