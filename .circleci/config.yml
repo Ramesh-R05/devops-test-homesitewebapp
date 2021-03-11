@@ -2,9 +2,12 @@
 version: 2.1
 
 # ORBS
+
 orbs:
   welcome: circleci/welcome-orb@0.4.1
+
 # JOBS
+
 jobs:
 
   job-one:
@@ -15,23 +18,23 @@ jobs:
       - checkout
       - run: |
           echo "UBUNTU | NPM | NODEJS"
-          pwd; ls -ltr; id;
-          cd src
+          cd src; pwd;
+          echo "Switching to src dir (/home/circleci/homes-site/src) ...."
           curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
           source ~/.profile
           nvm install v10.19.0
-          nvm use v10.19.0; id
+          nvm use v10.19.0;
+          echo "Report NVM and NPM Version"
           node --version
           npm --version
+          echo "Set BXM Registry ... "
           npm set @bxm:registry http://npm.digital.bauer-media.net.au
           npm install
           npm rebuild node-sass --force
           npm run test:ci
 
-
-
-
 # WORKFLOWS
+
 workflows:
   welcome:
     jobs:
