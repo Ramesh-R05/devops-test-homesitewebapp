@@ -1,5 +1,7 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+
 # Version 2.1 with AWS ECR and ECS - Homes-Site
+
 version: 2.1
 
 # ORBS
@@ -9,15 +11,19 @@ orbs:
 
 # JOBS
 
+
 jobs:
-  job-one:
+
+# Preparing VM for NodeJS
+
+  Preparing-VM-for-NodeJS:
     machine:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
     steps:
       - checkout
       - run: |
-          echo "UBUNTU | NPM | NODEJS"
+          echo "UBUNTU | NVM | NPM | NODEJS"
 
           echo "### Switching to src dir (/home/circleci/homes-site/src) ### "
           cd src; pwd;
@@ -45,11 +51,30 @@ jobs:
           npm run test:ci
           NODE_ENV=production npm run build
 
+# ECR Integration - Build and Push
+
+   push-docker-image-to-ECR-REPOS:
+     - aws-ecr/build-and-push-image:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          region: AWS_DEFAULT_REGION
+          profile-name: profile1
+          account-url: AWS_ECR_ACCOUNT_URL
+          repo: cci-repos1
+          create-repo: true
+          dockerfile: Dockerfile
+          no-output-timeout: 20m
+          skip-when-tags-exist: false
+          tag: 'latest,Port80'
+
+
+
 # WORKFLOWS
 
 workflows:
   welcome:
     jobs:
       - job-one
+
 
 ### End ###
