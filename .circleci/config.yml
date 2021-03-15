@@ -8,14 +8,12 @@ version: 2.1
 
 orbs:
   welcome: circleci/welcome-orb@0.4.1
+  aws-ecr: circleci/aws-ecr@6.15.3
+  aws-ecs: circleci/aws-ecs@2.0.0
 
 # JOBS
-
-
 jobs:
-
 # Preparing VM for NodeJS
-
   Preparing-VM-for-NodeJS:
     machine:
       image: ubuntu-1604:202010-01
@@ -52,8 +50,6 @@ jobs:
           NODE_ENV=production npm run build
 
 # ECR Integration - Build and Push
-
-   push-docker-image-to-ECR-REPOS:
      - aws-ecr/build-and-push-image:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
