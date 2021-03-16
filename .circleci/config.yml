@@ -73,7 +73,7 @@ jobs:
 # WORKFLOWS
 
 workflows:
-  version: 2
+  version: 2.1
   homes-site-build:
     jobs:
       - ecr-buildandpush-dockerimage
