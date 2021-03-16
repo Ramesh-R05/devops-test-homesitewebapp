@@ -10,9 +10,6 @@ orbs:
   aws-ecs: circleci/aws-ecs@2.0.0
 
 jobs:
-
-# preparing VM for NodeJS app
-
   PreparingVM-for-NodeJS:
     machine:
       image: ubuntu-1604:202010-01
@@ -49,7 +46,6 @@ jobs:
           NODE_ENV=production npm run build
 
 # AWS ECR Integration - Build and Push Docker Images - NodeJS
-
     ecr-buildandpush-dockerimage:
       machine:
         image: ubuntu-1604:202010-01
