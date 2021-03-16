@@ -63,12 +63,12 @@ jobs:
           region: AWS_DEFAULT_REGION
           profile-name: profile1
           account-url: AWS_ECR_ACCOUNT_URL
-          repo: cci-repos1
+          repo: cci-repos2
           create-repo: true
           dockerfile: Dockerfile
           no-output-timeout: 20m
           skip-when-tags-exist: false
-          tag: 'latest,Port80'
+          tag: 'latest,homes-site-Port3001'
 
 # WORKFLOWS
 
@@ -76,7 +76,6 @@ workflows:
   version: 2
   homes-site-build:
     jobs:
-      - preparingVM-for-NodeJS
       - ecr-buildandpush-dockerimage:
           requires:
             - preparingVM-for-NodeJS
