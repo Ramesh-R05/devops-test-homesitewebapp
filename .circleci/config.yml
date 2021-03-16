@@ -10,7 +10,7 @@ orbs:
   aws-ecs: circleci/aws-ecs@2.0.0
 
 jobs:
-  PreparingVM-for-NodeJS:
+  preparingVM-for-NodeJS:
     machine:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
@@ -64,12 +64,11 @@ jobs:
             skip-when-tags-exist: false
             tag: 'latest,Port80'
             requires:
-              - PreparingVM-for-NodeJS
+              - preparingVM-for-NodeJS
 
 # WORKFLOWS
 
 workflows:
-  version: 2.1
   homes-site-build:
     jobs:
       - ecr-buildandpush-dockerimage
