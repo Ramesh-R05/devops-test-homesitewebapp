@@ -18,8 +18,11 @@ jobs:
     machine:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
+
     steps:
+
       - checkout
+
       - run: |
           echo "UBUNTU | NVM | NPM | NODEJS"
 
@@ -49,6 +52,19 @@ jobs:
           npm run test:ci
           NODE_ENV=production npm run build
 
+      - aws-ecr/build-and-push-image:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          region: AWS_DEFAULT_REGION
+          profile-name: profile1
+          account-url: AWS_ECR_ACCOUNT_URL
+          repo: cci-repos1
+          create-repo: true
+          dockerfile: Dockerfile
+          no-output-timeout: 20m
+          skip-when-tags-exist: false
+          tag: 'latest,Port80'
+
 # ECR Integration - Build and Push
 
 
@@ -61,20 +77,5 @@ workflows:
   welcome:
     jobs:
       - PreparingVM-for-NodeJS
-      - aws-ecr/build-and-push-image:
-            aws-access-key-id: AWS_ACCESS_KEY_ID
-            aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-            region: AWS_DEFAULT_REGION
-            profile-name: profile1
-            account-url: AWS_ECR_ACCOUNT_URL
-            repo: cci-repos1
-            create-repo: true
-            dockerfile: Dockerfile
-            no-output-timeout: 20m
-            skip-when-tags-exist: false
-            tag: 'latest,Port80'
-       requires:
-            PreparingVM-for-NodeJS
-
 
 ### End ###
