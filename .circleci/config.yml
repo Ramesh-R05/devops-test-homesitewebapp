@@ -74,10 +74,10 @@ jobs:
 # WORKFLOWS
 workflows:
   welcome:
-    jobs:      
+    jobs:
+      - PreparingVM-for-NodeJS
       - ecr-buildandpush-dockerimage
-          requires:
-            - preparingVM-for-NodeJS
+        
 
 
 
