@@ -12,6 +12,9 @@ orbs:
 # JOBS
 
 jobs:
+
+# preparingVM-for-NodeJS
+
   preparingVM-for-NodeJS:
     machine:
       image: ubuntu-1604:202010-01
@@ -47,12 +50,13 @@ jobs:
           npm run test:ci
           NODE_ENV=production npm run build
 
-# WORKFLOWS
+# AWS ECR Integration - Build and Push Docker Images - NodeJS
 
-workflows:
-  version: 2.1
-  homes-site-build:
-    jobs:
+  ecr-buildandpush-dockerimage:
+    machine:
+      image: ubuntu-1604:202010-01
+    working_directory: ~/homes-site
+    steps:
       - aws-ecr/build-and-push-image:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
@@ -65,6 +69,15 @@ workflows:
           no-output-timeout: 20m
           skip-when-tags-exist: false
           tag: 'latest,Port80'
+
+# WORKFLOWS
+
+workflows:
+  version: 2
+  homes-site-build:
+    jobs:
+      - preparingVM-for-NodeJS
+      - ecr-buildandpush-dockerimage
           requires:
             - preparingVM-for-NodeJS
 
