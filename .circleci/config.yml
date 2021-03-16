@@ -67,8 +67,8 @@ jobs:
             no-output-timeout: 20m
             skip-when-tags-exist: false
             tag: 'latest,Port80'
-        requires:
-          - PreparingVM-for-NodeJS
+      requires:
+        - PreparingVM-for-NodeJS
 
 # WORKFLOWS
 
