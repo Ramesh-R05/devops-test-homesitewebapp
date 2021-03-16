@@ -1,4 +1,5 @@
 # This dockerfile is designed to be run inside the new ECS infrastructure
+# Base Image Download
 FROM 317367993082.dkr.ecr.ap-southeast-2.amazonaws.com/node-base-lite-aws:10.19.0
 MAINTAINER Bxm Developer <bxmdeveloper@gmail.com>
 
