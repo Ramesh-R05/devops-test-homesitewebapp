@@ -67,8 +67,8 @@ jobs:
             no-output-timeout: 20m
             skip-when-tags-exist: false
             tag: 'latest,Port80'
-#      requires:
-#        - PreparingVM-for-NodeJS
+            requires:
+              - PreparingVM-for-NodeJS
 
 # WORKFLOWS
 
@@ -76,10 +76,7 @@ workflows:
   version: 2
   homes-site-build:
     jobs:
-      - PreparingVM-for-NodeJS
-      - ecr-buildandpush-dockerimage:
-          requires:
-            - PreparingVM-for-NodeJS
+      - ecr-buildandpush-dockerimage
 
 
 
