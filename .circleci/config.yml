@@ -50,6 +50,9 @@ jobs:
 
 # Build and Push Docker Image - NodeJS
   job-two:
+    machine:
+      image: ubuntu-1604:202010-01
+    working_directory: ~/homes-site
     steps:
       - aws-ecr/build-and-push-image:
           aws-access-key-id: AWS_ACCESS_KEY_ID
