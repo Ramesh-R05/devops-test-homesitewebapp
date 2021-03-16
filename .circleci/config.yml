@@ -73,11 +73,11 @@ jobs:
 
 # WORKFLOWS
 workflows:
-  welcome:
+  homes-site-build:
     jobs:
       - PreparingVM-for-NodeJS
       - ecr-buildandpush-dockerimage
-        
+
 
 
 
