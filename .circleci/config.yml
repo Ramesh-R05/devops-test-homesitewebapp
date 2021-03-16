@@ -51,18 +51,7 @@ jobs:
 
 # ECR Integration - Build and Push
 
-  aws-ecr/build-and-push-image:
-    aws-access-key-id: AWS_ACCESS_KEY_ID
-    aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-    region: AWS_DEFAULT_REGION
-    profile-name: profile1
-    account-url: AWS_ECR_ACCOUNT_URL
-    repo: cci-repos1
-    create-repo: true
-    dockerfile: Dockerfile
-    no-output-timeout: 20m
-    skip-when-tags-exist: false
-    tag: 'latest,Port80'
+
 
 
 
@@ -72,7 +61,18 @@ workflows:
   welcome:
     jobs:
       - PreparingVM-for-NodeJS
-      - aws-ecr/build-and-push-image
+      - aws-ecr/build-and-push-image:          
+            aws-access-key-id: AWS_ACCESS_KEY_ID
+            aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+            region: AWS_DEFAULT_REGION
+            profile-name: profile1
+            account-url: AWS_ECR_ACCOUNT_URL
+            repo: cci-repos1
+            create-repo: true
+            dockerfile: Dockerfile
+            no-output-timeout: 20m
+            skip-when-tags-exist: false
+            tag: 'latest,Port80'
 
 
 ### End ###
