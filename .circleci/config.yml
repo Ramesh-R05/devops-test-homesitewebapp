@@ -9,7 +9,11 @@ orbs:
   aws-ecr: circleci/aws-ecr@6.15.3
   aws-ecs: circleci/aws-ecs@2.0.0
 
+# JOBS
+
 jobs:
+
+# AWS ECR Integration - Build and Push Docker Images - NodeJS
   preparingVM-for-NodeJS:
     machine:
       image: ubuntu-1604:202010-01
@@ -46,30 +50,30 @@ jobs:
           NODE_ENV=production npm run build
 
 # AWS ECR Integration - Build and Push Docker Images - NodeJS
-    ecr-buildandpush-dockerimage:
-      machine:
-        image: ubuntu-1604:202010-01
-      working_directory: ~/homes-site
-      steps:
-        - aws-ecr/build-and-push-image:
-            aws-access-key-id: AWS_ACCESS_KEY_ID
-            aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-            region: AWS_DEFAULT_REGION
-            profile-name: profile1
-            account-url: AWS_ECR_ACCOUNT_URL
-            repo: cci-repos1
-            create-repo: true
-            dockerfile: Dockerfile
-            no-output-timeout: 20m
-            skip-when-tags-exist: false
-            tag: 'latest,Port80'
+  ecr-buildandpush-dockerimage:
+    machine:
+      image: ubuntu-1604:202010-01
+    working_directory: ~/homes-site
+    steps:
+      - aws-ecr/build-and-push-image:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          region: AWS_DEFAULT_REGION
+          profile-name: profile1
+          account-url: AWS_ECR_ACCOUNT_URL
+          repo: cci-repos1
+          create-repo: true
+          dockerfile: Dockerfile
+          no-output-timeout: 20m
+          skip-when-tags-exist: false
+          tag: 'latest,Port80'
 
 # WORKFLOWS
 
 workflows:
   homes-site-build:
     jobs:
-      - preparingVM-for-NodeJS
+      #- preparingVM-for-NodeJS
       - ecr-buildandpush-dockerimage
 
 
