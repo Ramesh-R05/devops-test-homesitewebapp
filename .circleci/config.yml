@@ -76,7 +76,7 @@ workflows:
   version: 2
   homes-site-build:
     jobs:
-      - ecr-buildandpush-dockerimage
+      - ecr-buildandpush-dockerimage:
           requires:
             - PreparingVM-for-NodeJS
 
