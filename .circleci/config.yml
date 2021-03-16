@@ -12,17 +12,13 @@ orbs:
 # JOBS
 
 jobs:
-
 # Preparing VM for NodeJS
   PreparingVM-for-NodeJS:
     machine:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
-
     steps:
-
       - checkout
-
       - run: |
           echo "UBUNTU | NVM | NPM | NODEJS"
 
@@ -52,6 +48,9 @@ jobs:
           npm run test:ci
           NODE_ENV=production npm run build
 
+# Build and Push Docker Image - NodeJS
+  job-two:
+    steps:
       - aws-ecr/build-and-push-image:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
@@ -77,5 +76,6 @@ workflows:
   welcome:
     jobs:
       - PreparingVM-for-NodeJS
+      - job-two
 
 ### End ###
