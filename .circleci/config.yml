@@ -73,6 +73,7 @@ jobs:
 
 # WORKFLOWS
 workflows:
+  version: 2.1
   homes-site-build:
     jobs:
       - PreparingVM-for-NodeJS:
