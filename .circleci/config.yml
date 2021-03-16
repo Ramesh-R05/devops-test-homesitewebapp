@@ -61,7 +61,7 @@ workflows:
   welcome:
     jobs:
       - PreparingVM-for-NodeJS
-      - aws-ecr/build-and-push-image:          
+      - aws-ecr/build-and-push-image:
             aws-access-key-id: AWS_ACCESS_KEY_ID
             aws-secret-access-key: AWS_SECRET_ACCESS_KEY
             region: AWS_DEFAULT_REGION
@@ -73,6 +73,8 @@ workflows:
             no-output-timeout: 20m
             skip-when-tags-exist: false
             tag: 'latest,Port80'
+       requires:
+         - PreparingVM-for-NodeJS
 
 
 ### End ###
