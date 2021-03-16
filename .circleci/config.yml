@@ -67,15 +67,22 @@ jobs:
           no-output-timeout: 20m
           skip-when-tags-exist: false
           tag: 'latest,Port80'
-  requires:
-    - preparingVM-for-NodeJS
+
+# AWS ECR Integration - Build and Push Docker Images - NodeJS
+  job-two:
+    machine:
+      image: ubuntu-1604:202010-01
+    working_directory: ~/homes-site
+    steps:
+      requires:
+        - preparingVM-for-NodeJS
 
 # WORKFLOWS
 
 workflows:
   homes-site-build:
-    jobs:
-      - ecr-buildandpush-dockerimage
+    jobs:      
+      - job-two
 
 
 ### End ###
