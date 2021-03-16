@@ -12,7 +12,9 @@ orbs:
 # JOBS
 
 jobs:
+
 # Preparing VM for NodeJS
+
   PreparingVM-for-NodeJS:
     machine:
       image: ubuntu-1604:202010-01
@@ -48,8 +50,9 @@ jobs:
           npm run test:ci
           NODE_ENV=production npm run build
 
-# Build and Push Docker Image - NodeJS
-  job-two:
+# AWS ECR Integration - Build and Push Docker Images - NodeJS
+
+  ecr-buildandpush-dockerimage:
     machine:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
@@ -67,18 +70,14 @@ jobs:
           skip-when-tags-exist: false
           tag: 'latest,Port80'
 
-# ECR Integration - Build and Push
-
-
-
-
 
 # WORKFLOWS
-
 workflows:
   welcome:
     jobs:
-      - PreparingVM-for-NodeJS
-      - job-two
+      - preparingVM-for-NodeJS
+      - ecr-buildandpush-dockerimage
+        requires:
+          - preparingVM-for-NodeJS
 
 ### End ###
