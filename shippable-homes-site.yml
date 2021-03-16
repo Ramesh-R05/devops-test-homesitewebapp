@@ -113,3 +113,94 @@ API
 Training
 Blog
 About
+
+
+
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+# Version 2.1 with AWS ECR and ECS - Homes-Site
+version: 2.1
+
+# ORBS
+
+orbs:
+  welcome: circleci/welcome-orb@0.4.1
+  aws-ecr: circleci/aws-ecr@6.15.3
+  aws-ecs: circleci/aws-ecs@2.0.0
+
+# JOBS
+
+jobs:
+
+# AWS ECR Integration - Build and Push Docker Images - NodeJS
+  preparingVM-for-NodeJS:
+    machine:
+      image: ubuntu-1604:202010-01
+    working_directory: ~/homes-site
+    steps:
+      - checkout
+      - run: |
+          echo "UBUNTU | NVM | NPM | NODEJS"
+
+          echo "### Switching to src dir (/home/circleci/homes-site/src) ### "
+          cd src; pwd;
+
+          echo "### Install NVM (Node Version Manager) # Installer for NodeJS + NPM ###"
+          curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+          source ~/.profile
+
+          echo "### Install NVM v10.19.0 ###"
+          nvm install v10.19.0
+
+          echo "### Setting Default NVM v10.19.0 ###"
+          nvm use v10.19.0;
+
+          echo "### Print Version Information ###"
+          echo "Node Version : $(node --version)"
+          echo "NPM Version  : $(npm --version)"
+
+          echo "### Setting NPM Registry as BXM ###"
+          npm set @bxm:registry http://npm.digital.bauer-media.net.au
+
+          echo "### NPM > Install src/package.json > Node_Rebuild > Node_Test ###"
+          npm install
+          npm rebuild node-sass --force
+          npm run test:ci
+          NODE_ENV=production npm run build
+
+# AWS ECR Integration - Build and Push Docker Images - NodeJS
+  ecr-buildandpush-dockerimage:
+    machine:
+      image: ubuntu-1604:202010-01
+    working_directory: ~/homes-site
+    steps:
+      - aws-ecr/build-and-push-image:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          region: AWS_DEFAULT_REGION
+          profile-name: profile1
+          account-url: AWS_ECR_ACCOUNT_URL
+          repo: cci-repos1
+          create-repo: true
+          dockerfile: Dockerfile
+          no-output-timeout: 20m
+          skip-when-tags-exist: false
+          tag: 'latest,Port80'
+
+# AWS ECR Integration - Build and Push Docker Images - NodeJS
+  job-two:
+    machine:
+      image: ubuntu-1604:202010-01
+    working_directory: ~/homes-site
+    steps:
+      requires:
+        - preparingVM-for-NodeJS
+
+# WORKFLOWS
+
+workflows:
+  homes-site-build:
+    jobs:
+      - job-two
+
+
+### End ###
