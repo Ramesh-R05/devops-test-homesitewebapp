@@ -62,14 +62,12 @@ jobs:
           no-output-timeout: 20m
           skip-when-tags-exist: false
           tag: 'latest,homes-site-Port3001'
+
 # ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
 # Roll out the Deployment [ in the form of New Task Revision ]
 # no of times to check the new task deployment
 # in minutes # in secs
-orbs:
-  aws-ecs: circleci/aws-ecs@2.0.0
 
-jobs:
   ecs-nodejs-deploydockerimage:
     machine:
       image: ubuntu-1604:202010-01
@@ -87,10 +85,11 @@ jobs:
           poll-interval: 10
           verification-timeout: 1m
 
+
+
 # WORKFLOWS
 # This is required for the Orbs + Jobs to use -requires- keyword on the workflow.
 # Version: 2 / Version:2.1(first few-line on file).
-
 
 workflows:
   version: 2
