@@ -62,18 +62,18 @@ jobs:
           no-output-timeout: 20m
           skip-when-tags-exist: false
           tag: 'latest,homes-site-Port3001'
-
 # ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
 # Roll out the Deployment [ in the form of New Task Revision ]
 # no of times to check the new task deployment
 # in minutes # in secs
+
   ecs-nodejs-deploydockerimage:
     machine:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
     steps:
-      - run: echo "Deploy Service Update --- ECS"
-
+      - run: echo "ECS Integration  Cluster | Service | Task | PullImage-ECR"
+# 
       - aws-ecs/deploy-service-update:
           cluster-name: arn:aws:ecs:ap-southeast-2:317367993082:cluster/app-ecs-cci1
           service-name: cci-homes-site-test-deploy-master-homes-site-man-master
