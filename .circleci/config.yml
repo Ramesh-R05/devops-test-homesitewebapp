@@ -63,27 +63,24 @@ jobs:
           skip-when-tags-exist: false
           tag: 'latest,homes-site-Port3001'
 
+      - aws-ecs/deploy-service-update:
+          cluster-name: arn:aws:ecs:ap-southeast-2:317367993082:cluster/app-ecs-cci1
+          service-name: cci-homes-site-test-deploy-master-homes-site-man-master
+          family: cci-homes-site-test-deploy-master-homes-site-man
+          container-image-name-updates: "container=cci-homes-site-img-master,tag=latest"
+          force-new-deployment: true
+          verify-revision-is-deployed: true
+          max-poll-attempts: 5
+          poll-interval: 10
+          verification-timeout: 1m
+
+
 # ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
 # Roll out the Deployment [ in the form of New Task Revision ]
 # no of times to check the new task deployment
 # in minutes # in secs
 
-  ecs-nodejs-deploydockerimage:
-    machine:
-      image: ubuntu-1604:202010-01
-    working_directory: ~/homes-site
-    steps:
-      - run: echo "ECS Integration  Cluster | Service | Task | PullImage-ECR"
-      #- aws-ecs/deploy-service-update:
-      #    cluster-name: arn:aws:ecs:ap-southeast-2:317367993082:cluster/app-ecs-cci1
-      #    service-name: cci-homes-site-test-deploy-master-homes-site-man-master
-      #    family: cci-homes-site-test-deploy-master-homes-site-man
-      #    container-image-name-updates: "container=cci-homes-site-img-master,tag=latest"
-      #    force-new-deployment: true
-      #    verify-revision-is-deployed: true
-      #    max-poll-attempts: 5
-      #    poll-interval: 10
-      #    verification-timeout: 1m
+
 
 
 
@@ -96,9 +93,9 @@ workflows:
   homes-site-build:
     jobs:
       - ecr-buildandpush-dockerimage
-      - ecs-nodejs-deploydockerimage:
-          requires:
-            - ecr-buildandpush-dockerimage
+      #- ecs-nodejs-deploydockerimage:
+      #    requires:
+      #      - ecr-buildandpush-dockerimage
       #- preparingVM-for-NodeJS
       #- ecr-buildandpush-dockerimage:
       #    requires:
