@@ -67,11 +67,12 @@ jobs:
           service-name: cci-homes-site-test-deploy-master-homes-site-man-master
           family: cci-homes-site-test-deploy-master-homes-site-man
           container-image-name-updates: "container=cci-homes-site-img-master,tag=latest"
-          force-new-deployment: true
           verify-revision-is-deployed: true
+          force-new-deployment: true
+          verification-timeout: 1m
           max-poll-attempts: 5
           poll-interval: 10
-          verification-timeout: 1m
+
 
 
 # ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
