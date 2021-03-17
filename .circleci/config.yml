@@ -7,7 +7,6 @@ version: 2.1
 # Orbs included
 
 orbs:
-  welcome: circleci/welcome-orb@0.4.1
   aws-ecr: circleci/aws-ecr@6.15.3
   aws-ecs: circleci/aws-ecs@2.0.0
 
