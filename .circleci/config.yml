@@ -68,7 +68,7 @@ jobs:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
     steps:
-      - run: echo "UBUNTU | NVM | NPM | NODE_JS"
+      - run: echo "ECS | NODEJS | CLUSTER"
       #
       - aws-ecs/deploy-service-update:
           cluster-name: arn:aws:ecs:ap-southeast-2:317367993082:cluster/app-ecs-cci1
