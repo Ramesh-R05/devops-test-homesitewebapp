@@ -8,7 +8,8 @@ version: 2.1
 
 orbs:
   aws-ecr: circleci/aws-ecr@6.15.3
-  aws-ecs: circleci/aws-ecs@2.0.0
+  #aws-ecs: circleci/aws-ecs@2.0.0
+
 
 # JOBS
 # AWS ECR Integration: Build and Push NODE JS APP as Docker Image to ECR
@@ -62,6 +63,13 @@ jobs:
           skip-when-tags-exist: false
           tag: 'latest,homes-site-Port3001'
 
+  ecs-nodejs-deploydockerimage:
+    machine:
+      image: ubuntu-1604:202010-01
+    working_directory: ~/homes-site
+    steps:
+      - run: echo "UBUNTU | NVM | NPM | NODE_JS"
+      #
       - aws-ecs/deploy-service-update:
           cluster-name: arn:aws:ecs:ap-southeast-2:317367993082:cluster/app-ecs-cci1
           service-name: cci-homes-site-test-deploy-master-homes-site-man-master
@@ -72,8 +80,6 @@ jobs:
           verification-timeout: 1m
           max-poll-attempts: 5
           poll-interval: 10
-
-
 
 # ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
 # Roll out the Deployment [ in the form of New Task Revision ]
@@ -93,7 +99,7 @@ workflows:
   homes-site-build:
     jobs:
       - ecr-buildandpush-dockerimage
-      #- ecs-nodejs-deploydockerimage:
+      - ecs-nodejs-deploydockerimage
       #    requires:
       #      - ecr-buildandpush-dockerimage
       #- preparingVM-for-NodeJS
