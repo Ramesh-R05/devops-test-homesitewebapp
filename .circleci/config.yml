@@ -69,13 +69,24 @@ jobs:
 # in minutes # in secs
 
 
-  ecs-nodejs-deploydockerimage:
-    machine:
-      image: ubuntu-1604:202010-01
-    working_directory: ~/homes-site
-    steps:
-      - run: echo "ECS | NODEJS | CLUSTER"
+#  ecs-nodejs-deploydockerimage:
+#    machine:
+#      image: ubuntu-1604:202010-01
+#    working_directory: ~/homes-site
+#    steps:
+#      - run: echo "ECS | NODEJS | CLUSTER"
       #
+
+# WORKFLOWS
+# This is required for the Orbs + Jobs to use -requires- keyword on the workflow.
+# Version: 2 / Version:2.1(first few-line on file).
+
+workflows:
+  #version: 2
+  homes-site-build:
+    jobs:
+      - ecr-buildandpush-dockerimage
+      #- ecs-nodejs-deploydockerimage
       - aws-ecs/deploy-service-update:
           cluster-name: arn:aws:ecs:ap-southeast-2:317367993082:cluster/app-ecs-cci1
           service-name: cci-homes-site-test-deploy-master-homes-site-man-master
@@ -87,16 +98,6 @@ jobs:
           max-poll-attempts: 5
           poll-interval: 10
 
-# WORKFLOWS
-# This is required for the Orbs + Jobs to use -requires- keyword on the workflow.
-# Version: 2 / Version:2.1(first few-line on file).
-
-workflows:
-  #version: 2
-  homes-site-build:
-    jobs:
-      - ecr-buildandpush-dockerimage
-      - ecs-nodejs-deploydockerimage
       #    requires:
       #      - ecr-buildandpush-dockerimage
       #- preparingVM-for-NodeJS
