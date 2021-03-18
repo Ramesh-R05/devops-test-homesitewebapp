@@ -82,7 +82,7 @@ jobs:
 # Version: 2 / Version:2.1(first few-line on file).
 
 workflows:
-  #version: 2
+  version: 2
   homes-site-build:
     jobs:
       - ecr-buildandpush-dockerimage
@@ -97,6 +97,8 @@ workflows:
           verification-timeout: 1m
           max-poll-attempts: 5
           poll-interval: 10
+          requires:
+            - ecr-buildandpush-dockerimage
 
       #    requires:
       #      - ecr-buildandpush-dockerimage
