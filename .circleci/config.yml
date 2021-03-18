@@ -8,7 +8,7 @@ version: 2.1
 
 orbs:
   aws-ecr: circleci/aws-ecr@6.15.3
-  #aws-ecs: circleci/aws-ecs@2.0.0
+  aws-ecs: circleci/aws-ecs@2.0.0
 
 
 # JOBS
@@ -63,6 +63,12 @@ jobs:
           skip-when-tags-exist: false
           tag: 'latest,homes-site-Port3001'
 
+# ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
+# Roll out the Deployment [ in the form of New Task Revision ]
+# no of times to check the new task deployment
+# in minutes # in secs
+
+
   ecs-nodejs-deploydockerimage:
     machine:
       image: ubuntu-1604:202010-01
@@ -81,21 +87,12 @@ jobs:
           max-poll-attempts: 5
           poll-interval: 10
 
-# ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
-# Roll out the Deployment [ in the form of New Task Revision ]
-# no of times to check the new task deployment
-# in minutes # in secs
-
-
-
-
-
 # WORKFLOWS
 # This is required for the Orbs + Jobs to use -requires- keyword on the workflow.
 # Version: 2 / Version:2.1(first few-line on file).
 
 workflows:
-  version: 2
+  version: 2.1
   homes-site-build:
     jobs:
       - ecr-buildandpush-dockerimage
