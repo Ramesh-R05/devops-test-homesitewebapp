@@ -97,8 +97,8 @@ workflows:
           verification-timeout: 1m
           max-poll-attempts: 5
           poll-interval: 10
-          requires:
-            - ecr-buildandpush-dockerimage
+          #requires:
+          #  - ecr-buildandpush-dockerimage
 
       #    requires:
       #      - ecr-buildandpush-dockerimage
