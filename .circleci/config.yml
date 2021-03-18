@@ -90,7 +90,7 @@ workflows:
       - aws-ecs/deploy-service-update:
           cluster-name: arn:aws:ecs:ap-southeast-2:317367993082:cluster/cluster-cci
           service-name: service-cci
-          family: task-cci7
+          family: task-cci6
           container-image-name-updates: "container=container-cci6,tag=latest"
           verify-revision-is-deployed: true
           force-new-deployment: true
