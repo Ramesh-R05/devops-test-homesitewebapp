@@ -88,7 +88,7 @@ workflows:
       #- ecr-buildandpush-dockerimage
       #- ecs-nodejs-deploydockerimage
       - aws-ecs/deploy-service-update:
-          cluster-name: arn:aws:ecs:ap-southeast-2:317367993082:cluster/cci-app-ecs
+          cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
           service-name: cci-service1
           family: cci-task1
           container-image-name-updates: "container=cci-container1,tag=latest"
