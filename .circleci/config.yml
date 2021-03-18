@@ -88,10 +88,10 @@ workflows:
       #- ecr-buildandpush-dockerimage
       #- ecs-nodejs-deploydockerimage
       - aws-ecs/deploy-service-update:
-          cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
-          service-name: cci-service1
-          family: cci-task1
-          container-image-name-updates: "container=cci-container1,tag=latest"
+          cluster-name: arn:aws:ecs:ap-southeast-2:317367993082:cluster/cluster-cci
+          service-name: service-cci
+          family: task-cci7
+          container-image-name-updates: "container=container-cci6,tag=latest"
           verify-revision-is-deployed: true
           force-new-deployment: true
           verification-timeout: 3m
