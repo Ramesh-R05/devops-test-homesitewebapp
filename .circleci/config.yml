@@ -90,8 +90,8 @@ workflows:
       - aws-ecs/deploy-service-update:
           cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
           service-name: cci-service1
-          family: cci-task1
-          container-image-name-updates: "container=cci-container1,tag=latest"
+          family: cci-task2
+          container-image-name-updates: "container=cci-container2,tag=latest"
           verify-revision-is-deployed: true
           force-new-deployment: true
           verification-timeout: 3m
