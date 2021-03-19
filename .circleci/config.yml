@@ -86,7 +86,7 @@ workflows:
   homes-site-build:
     jobs:
       - ecr-buildandpush-dockerimage
-      #- ecs-nodejs-deploydockerimage 
+      #- ecs-nodejs-deploydockerimage
       - aws-ecs/deploy-service-update:
           cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
           service-name: cci-service1
