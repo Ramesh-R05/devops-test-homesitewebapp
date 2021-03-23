@@ -9,7 +9,7 @@
         "image": "317367993082.dkr.ecr.ap-southeast-2.amazonaws.com/cci-repos2:latest",
         "cpu": 512,
         "memory": 512,
-        "essential": "true" 
+        "essential": true
         }
     ],
 "family": "cci-task3"
