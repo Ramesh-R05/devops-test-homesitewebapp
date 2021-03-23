@@ -69,7 +69,7 @@ jobs:
 # WORKFLOWS
 
 workflows:
-  version: 2 # Version change from 2.1 > 2.0 (Required by circle_CI for workflow formatting)
+  version: 2
   homes-site-build:
     jobs:
       - ecr-buildandpush-dockerimage
@@ -107,5 +107,6 @@ workflows:
       # This is required for the Orbs + Jobs to use -requires- keyword on the workflow.
 
       # Version: 2 / Version:2.1(first few-line on file).
+      # Version change from 2.1 > 2.0 (Required by circle_CI for workflow formatting)
 
 ### End ###
