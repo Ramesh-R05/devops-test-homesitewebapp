@@ -68,7 +68,8 @@ jobs:
       - aws-ecs/run-task:
           launch-type: EC2
           cluster: cci-app-ecs
-          task-definition: cci-task3          
+          task-definition: cci-task3
+          awsvpc: false
           enable-ecs-managed-tags: true          
           
 
