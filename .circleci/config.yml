@@ -78,7 +78,7 @@ workflows:
 
       - aws-ecs/run-task:
           cluster: cci-app-ecs
-          task-definition: cci-task3
+          task-definition: cci-task3:1
           enable-ecs-managed-tags: true
           awsvpc: false
           launch-type: EC2
