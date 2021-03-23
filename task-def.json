@@ -10,16 +10,14 @@
         "cpu": 512,
         "memory": 512,
         "essential": "true",
-        "portMappings":
-        [
+        "portMappings": [
           {
            "containerPort": 3001,
            "hostPort": 80,
            "protocol": "tcp"
           }
         ],
-        "environment":
-        [
+        "environment": [
          {
           "name": "NODE_ENV",
           "value": "production"
