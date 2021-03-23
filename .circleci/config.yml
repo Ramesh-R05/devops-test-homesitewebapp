@@ -56,9 +56,9 @@ jobs:
       - aws-ecr/build-and-push-image:
           aws-access-key-id: ECR_AWS_ACCESS_KEY_ID
           aws-secret-access-key: ECR_AWS_SECRET_ACCESS_KEY
+          account-url: AWS_ECR_ACCOUNT_URL
           region: AWS_DEFAULT_REGION
           profile-name: profile1
-          account-url: AWS_ECR_ACCOUNT_URL
           repo: cci-repos2
           create-repo: true
           dockerfile: Dockerfile
