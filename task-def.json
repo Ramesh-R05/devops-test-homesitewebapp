@@ -17,7 +17,35 @@
             "command": [
                 "./main"
             ],
-            "essential": true
+            "essential": true,
+            "environment": [
+                   {
+                       "name": "NODE_ENV",
+                       "value": "production"
+                   },
+                   {
+                       "name": "APP_ENV",
+                       "value": "test"
+                   },
+                   {
+                       "name": "APP_STUBBED",
+                       "value": "true"
+                   },
+                   {
+                       "name": "APP_DEBUG",
+                       "value": "true"
+                   }
+               ],
+               "mountPoints": [],
+               "volumesFrom": [],
+               "logConfiguration": {
+                   "logDriver": "awslogs",
+                   "options": {
+                       "awslogs-group": "/ecs/cci-task2",
+                       "awslogs-region": "ap-southeast-2",
+                       "awslogs-stream-prefix": "ecs"
+                   }
+       ],
         }
     ]
 }
