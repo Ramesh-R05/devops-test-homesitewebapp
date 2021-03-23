@@ -1,6 +1,7 @@
 {
 "family": "cci-task3",
-"executionRoleArn": "arn:aws:iam::014901580825:role/ecsTaskExecutionRole",
+"requiresCompatibilities": "EC2",    
+"executionRoleArn": "arn:aws:iam::014901580825:role/ecsTaskExecutionRole",    
 "containerDefinitions": 
     [
       {
@@ -35,8 +36,7 @@
                 "name": "APP_DEBUG",
                 "value": "true"
                 }
-            ],         
-            "requiresCompatibilities": ["EC2"],
+            ],                     
             "essential": true
         }      
     ],
