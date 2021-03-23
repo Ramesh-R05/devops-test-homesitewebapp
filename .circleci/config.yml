@@ -66,16 +66,16 @@ jobs:
           skip-when-tags-exist: false
           tag: 'latest,homes-site-Port3001'
 
-       job-one:
-         machine:
-           image: ubuntu-1604:202010-01
-         steps:
-           - aws-ecs/run-task:
-               cluster: cci-app-ecs
-               task-definition: cci-task3
-               enable-ecs-managed-tags: true
-               awsvpc: false
-               launch-type: EC2
+  job-one:
+    machine:
+      image: ubuntu-1604:202010-01
+    steps:
+      - aws-ecs/run-task:
+          cluster: cci-app-ecs
+          task-definition: cci-task3
+          enable-ecs-managed-tags: true
+          awsvpc: false
+          launch-type: EC2
 
 # WORKFLOWS
 
