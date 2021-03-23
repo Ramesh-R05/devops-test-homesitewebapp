@@ -10,9 +10,15 @@
         "cpu": 1024,
         "memory": 1024,
         "essential": true,
-        "containerPort": 3001,
-        "hostPort": 80,
-        "protocol": "tcp"
+        "portMappings":
+        [
+             {
+                 "containerPort": 8080,
+                 "hostPort": 80,
+                 "protocol": "tcp"
+             }
+        ],
+
     }
 ],
 "family": "cci-task3"
