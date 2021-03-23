@@ -1,23 +1,42 @@
 {
 "executionRoleArn": "arn:aws:iam::014901580825:role/ecsTaskExecutionRole",
-"cpu": "1024",
-"memory": "1024",
+"cpu": 1024,
+"memory": 1024,
 "containerDefinitions":
 [
     {
         "name": "cci-container3",
         "image": "317367993082.dkr.ecr.ap-southeast-2.amazonaws.com/cci-repos2:latest",
-        "cpu": "1024",
-        "memory": "1024",
+        "cpu": 512,
+        "memory": 512,
         "essential": "true",
         "portMappings":
         [
-             {
-                 "containerPort": "8080",
-                 "hostPort": "80",
-                 "protocol": "tcp"
-             }
+          {
+           "containerPort": 3001,
+           "hostPort": 80,
+           "protocol": "tcp"
+          }
         ],
+        "environment":
+        [
+         {
+          "name": "NODE_ENV",
+          "value": "production"
+         },
+         {
+          "name": "APP_ENV",
+          "value": "test"
+         },
+         {
+          "name": "APP_STUBBED",
+          "value": "true"
+         },
+         {
+          "name": "APP_DEBUG",
+          "value": "true"
+         }
+      ],
     }
 ],
 "family": "cci-task3"
