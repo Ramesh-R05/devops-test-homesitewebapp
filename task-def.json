@@ -16,6 +16,7 @@
            "protocol": "tcp"
           }
         ],
+      }
 "environment": [
    {
      "name": "NODE_ENV",
@@ -34,7 +35,5 @@
     "value": "true"
     }
   ],
-}
-],
 "family": "cci-task3"
 }
