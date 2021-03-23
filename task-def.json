@@ -41,7 +41,7 @@
             "requiresCompatibilities": 
             [
             "EC2"
-            ]
+            ],
             "essential": true
         }      
     ],
