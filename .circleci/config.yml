@@ -17,7 +17,7 @@ jobs:
     machine:
       image: ubuntu-1604:202010-01
 
-# Prepare the VM for NODEJS App + Docker BUILD
+# Prepare the VM for Docker BUILD + NodeJS App
 
     working_directory: ~/homes-site
     steps:
@@ -69,10 +69,9 @@ jobs:
 # WORKFLOWS
 
 workflows:
-  version: 2
+  version: 2 # Version change from 2.1 > 2.0 (Required by circle_CI for workflow formatting)
   homes-site-build:
     jobs:
-
       - ecr-buildandpush-dockerimage
 
 # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
