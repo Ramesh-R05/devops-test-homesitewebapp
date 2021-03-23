@@ -12,5 +12,15 @@
         "essential": true
         }
     ],
+"portMappings": 
+    [
+       {
+       "containerPort": 3001,
+       "hostPort": 80,
+       "protocol": "tcp"
+       }
+    ],
 "family": "cci-task3"
 }
+
+
