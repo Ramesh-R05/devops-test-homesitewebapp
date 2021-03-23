@@ -1,8 +1,6 @@
 {
-"taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:014901580825:task-definition/cci-task2", 
+"family": "cci-task3"
 "executionRoleArn": "arn:aws:iam::014901580825:role/ecsTaskExecutionRole",
-"cpu": "1024",
-"memory": "1024",
 "containerDefinitions": 
     [
       {
@@ -38,14 +36,12 @@
                 "value": "true"
                 }
             ],         
-            "requiresCompatibilities": 
-            [
-            "EC2"
-            ],
+            "requiresCompatibilities": ["EC2"],
             "essential": true
         }      
     ],
-"family": "cci-task3"
+"cpu": "1024",
+"memory": "1024",    
 }
 
 
