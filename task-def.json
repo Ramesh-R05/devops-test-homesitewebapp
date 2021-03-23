@@ -1,5 +1,6 @@
 {
-"executionRoleArn": "arn:aws:iam::014901580825:role/ecsTaskExecutionRole",  
+"networkMode": "default",
+"executionRoleArn": "arn:aws:iam::014901580825:role/ecsTaskExecutionRole",
 "containerDefinitions":
 [
     {
