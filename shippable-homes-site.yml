@@ -74,31 +74,33 @@ integrations:
 #######################################
 
 # Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+# NodeJS App + Docker + ECR + ECS
 # Version 2.1 with AWS ECR and ECS - Homes-Site
+
 version: 2.1
 
 # ORBS
 
 orbs:
-  welcome: circleci/welcome-orb@0.4.1
   aws-ecr: circleci/aws-ecr@6.15.3
   aws-ecs: circleci/aws-ecs@2.0.0
 
 # JOBS
 
 jobs:
-
-# AWS ECR Integration - Build and Push Docker Images - NodeJS
-  preparingVM-for-NodeJS:
+  ecr-buildandpush-dockerimage:
     machine:
       image: ubuntu-1604:202010-01
+
+# Prepare the VM for Docker BUILD + NodeJS App
+
     working_directory: ~/homes-site
     steps:
       - checkout
       - run: |
-          echo "UBUNTU | NVM | NPM | NODEJS"
+          echo "UBUNTU | NVM | NPM | NODE_JS"
 
-          echo "### Switching to src dir (/home/circleci/homes-site/src) ### "
+          echo "### Switching to src dir (/home/circleci/homes-site/src) ###"
           cd src; pwd;
 
           echo "### Install NVM (Node Version Manager) # Installer for NodeJS + NPM ###"
@@ -124,40 +126,64 @@ jobs:
           npm run test:ci
           NODE_ENV=production npm run build
 
-# AWS ECR Integration - Build and Push Docker Images - NodeJS
-  ecr-buildandpush-dockerimage:
-    machine:
-      image: ubuntu-1604:202010-01
-    working_directory: ~/homes-site
-    steps:
+# AWS ECR Integration: Build and Push NODE JS APP as Docker Image to ECR
+
       - aws-ecr/build-and-push-image:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-access-key-id: ECR_AWS_ACCESS_KEY_ID
+          aws-secret-access-key: ECR_AWS_SECRET_ACCESS_KEY
           region: AWS_DEFAULT_REGION
           profile-name: profile1
           account-url: AWS_ECR_ACCOUNT_URL
-          repo: cci-repos1
+          repo: cci-repos2
           create-repo: true
           dockerfile: Dockerfile
           no-output-timeout: 20m
           skip-when-tags-exist: false
-          tag: 'latest,Port80'
-
-# AWS ECR Integration - Build and Push Docker Images - NodeJS
-  job-two:
-    machine:
-      image: ubuntu-1604:202010-01
-    working_directory: ~/homes-site
-    steps:
-      requires:
-        - preparingVM-for-NodeJS
+          tag: 'latest,homes-site-Port3001'
 
 # WORKFLOWS
 
 workflows:
+  version: 2 # Version change from 2.1 > 2.0 (Required by circle_CI for workflow formatting)
   homes-site-build:
     jobs:
-      - job-two
+      - ecr-buildandpush-dockerimage
+
+# AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
+
+      - aws-ecs/deploy-service-update:
+          cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
+          service-name: cci-service1
+          family: cci-task3
+          container-image-name-updates: "container=cci-container2,tag=latest"
+          verify-revision-is-deployed: true
+          force-new-deployment: true
+          verification-timeout: 3m
+          max-poll-attempts: 10
+          poll-interval: 10
+          requires:
+            - ecr-buildandpush-dockerimage
+
+### END ###
+
+      #- ecs-nodejs-deploydockerimage
+      #    requires:
+      #      - ecr-buildandpush-dockerimage
+      #- preparingVM-for-NodeJS
+      #- ecr-buildandpush-dockerimage:
+      #    requires:
+      #      - preparingVM-for-NodeJS
+
+      # ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
+      # Roll out the Deployment [ in the form of New Task Revision ]
+      # no of times to check the new task deployment
+      # in minutes # in secs
+
+      # This is required for the Orbs + Jobs to use -requires- keyword on the workflow.
+
+      # Version: 2 / Version:2.1(first few-line on file).
+
+### End ###
 
 
 ### End ###
