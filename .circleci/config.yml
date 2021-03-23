@@ -70,6 +70,8 @@ jobs:
     machine:
       image: ubuntu-1604:202010-01
     steps:
+      - aws-ecs/update-task-definition-from-json:
+          task-definition-json: task-def.json
       - aws-ecs/run-task:
           cluster: cci-app-ecs
           task-definition: cci-task3

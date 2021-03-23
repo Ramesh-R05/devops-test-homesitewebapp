@@ -1,0 +1,7 @@
+{
+    "cluster": "cci-app-ecs",
+    "serviceName": "cci-service1",
+    "taskDefinition": "cci-task3",
+    "desiredCount": 1,
+    "role": "ecsTaskExecutionRole"
+}
