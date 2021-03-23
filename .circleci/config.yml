@@ -51,28 +51,31 @@ jobs:
           npm run test:ci
           NODE_ENV=production npm run build
 
-      - aws-ecs/run-task:
-          cluster: cci-app-ecs
-          task-definition: cci-task3
-          enable-ecs-managed-tags: true
-          awsvpc: false
-          launch-type: EC2
-          count: 1
-
 # AWS ECR Integration: Build and Push NODE JS APP as Docker Image to ECR
 
-      #- aws-ecr/build-and-push-image:
-      #    aws-access-key-id: ECR_AWS_ACCESS_KEY_ID
-      #    aws-secret-access-key: ECR_AWS_SECRET_ACCESS_KEY
-      #    account-url: AWS_ECR_ACCOUNT_URL
-      #    region: AWS_DEFAULT_REGION
-      #    profile-name: profile1
-      #    repo: cci-repos2
-      #    create-repo: true
-      #    dockerfile: Dockerfile
-      #    no-output-timeout: 20m
-      #    skip-when-tags-exist: false
-      #    tag: 'latest,homes-site-Port3001'
+      - aws-ecr/build-and-push-image:
+          aws-access-key-id: ECR_AWS_ACCESS_KEY_ID
+          aws-secret-access-key: ECR_AWS_SECRET_ACCESS_KEY
+          account-url: AWS_ECR_ACCOUNT_URL
+          region: AWS_DEFAULT_REGION
+          profile-name: profile1
+          repo: cci-repos2
+          create-repo: true
+          dockerfile: Dockerfile
+          no-output-timeout: 20m
+          skip-when-tags-exist: false
+          tag: 'latest,homes-site-Port3001'
+
+       job-one:
+         machine:
+           image: ubuntu-1604:202010-01
+         steps:
+           - aws-ecs/run-task:
+               cluster: cci-app-ecs
+               task-definition: cci-task3
+               enable-ecs-managed-tags: true
+               awsvpc: false
+               launch-type: EC2
 
 # WORKFLOWS
 
@@ -80,7 +83,8 @@ workflows:
   version: 2
   homes-site-build:
     jobs:
-      - ecr-buildandpush-dockerimage
+      #- ecr-buildandpush-dockerimage
+       - job-one
 
 # AWS ECS RUN_TASK_EC2: Create and Run the Task Def on ECS cluster
 
