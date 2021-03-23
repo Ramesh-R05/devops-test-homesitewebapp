@@ -1,5 +1,4 @@
 {
-"networkMode": "default",
 "executionRoleArn": "arn:aws:iam::014901580825:role/ecsTaskExecutionRole",
 "containerDefinitions":
 [
@@ -8,7 +7,7 @@
         "image": "317367993082.dkr.ecr.ap-southeast-2.amazonaws.com/cci-repos2:latest",
         "cpu": 1024,
         "memory": 1024,
-        "essential": true  
+        "essential": true
     }
 ],
 "family": "cci-task3"
