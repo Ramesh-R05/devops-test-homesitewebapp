@@ -17,23 +17,6 @@
           }
         ],
       }
-"environment": [
-   {
-     "name": "NODE_ENV",
-     "value": "production"
-   },
-   {
-     "name": "APP_ENV",
-     "value": "test"
-   },
-   {
-    "name": "APP_STUBBED",
-    "value": "true"
-   },
-   {
-    "name": "APP_DEBUG",
-    "value": "true"
-    }
-  ],
+    ]
 "family": "cci-task3"
 }
