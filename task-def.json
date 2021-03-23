@@ -1,4 +1,6 @@
 {
+  "family": null,
+  "taskRoleArn": null,
   "ipcMode": null,
   "executionRoleArn": "arn:aws:iam::014901580825:role/ecsTaskExecutionRole",
   "containerDefinitions": [

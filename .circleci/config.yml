@@ -73,12 +73,12 @@ jobs:
       - checkout
       - aws-ecs/update-task-definition-from-json:
           task-definition-json: task-def.json
-      - aws-ecs/run-task:
-          cluster: cci-app-ecs
-          task-definition: cci-task3
-          enable-ecs-managed-tags: true
-          awsvpc: false
-          launch-type: EC2
+      #- aws-ecs/run-task:
+      #    cluster: cci-app-ecs
+      #    task-definition: cci-task3
+      #    enable-ecs-managed-tags: true
+      #    awsvpc: false
+      #    launch-type: EC2
 
 # WORKFLOWS
 
