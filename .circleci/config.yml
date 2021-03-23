@@ -74,6 +74,20 @@ workflows:
     jobs:
       - ecr-buildandpush-dockerimage
 
+# AWS ECS RUN_TASK_EC2: Create and Run the Task Def on ECS cluster
+
+
+
+      - aws-ecs/run-task:
+          cluster: cci-app-ecs
+          task-definition: cci-task3
+          enable-ecs-managed-tags: true
+          launch-type: EC2
+          count: 1
+          #docker-image-for-job: 317367993082.dkr.ecr.ap-southeast-2.amazonaws.com/cci-repos2:latest
+          #
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
 # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
 
       - aws-ecs/deploy-service-update:
@@ -87,6 +101,7 @@ workflows:
           max-poll-attempts: 10
           poll-interval: 10
           requires:
+            - aws-ecs/run-task
             - ecr-buildandpush-dockerimage
 
 ### END ###
