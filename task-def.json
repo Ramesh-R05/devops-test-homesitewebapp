@@ -39,14 +39,14 @@
                 "logConfiguration": {
                     "logDriver": "awslogs",
                     "options": {
-                        "awslogs-group": "/ecs/cci-task2",
+                        "awslogs-group": "/ecs/cci-task3",
                         "awslogs-region": "ap-southeast-2",
                         "awslogs-stream-prefix": "ecs"
                     }
                 }
             }
         ],
-        "family": "cci-task2",
+        "family": "cci-task3",
         "executionRoleArn": "arn:aws:iam::014901580825:role/ecsTaskExecutionRole",
         "revision": 4,
         "volumes": [],
