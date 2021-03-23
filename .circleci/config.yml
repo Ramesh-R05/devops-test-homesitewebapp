@@ -102,7 +102,7 @@ workflows:
           poll-interval: 10
           requires:
             - aws-ecs/run-task
-            - ecr-buildandpush-dockerimage
+            #- ecr-buildandpush-dockerimage
 
 ### END ###
 
