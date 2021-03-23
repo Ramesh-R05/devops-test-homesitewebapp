@@ -1,88 +1,23 @@
 {
-    "taskDefinition": {
-        "family": "cci-task3",
-        "executionRoleArn": "arn:aws:iam::014901580825:role/ecsTaskExecutionRole",
-        "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:014901580825:task-definition/cci-task3",
-        "containerDefinitions": [
-            {
-                "name": "cci-container3",
-                "image": "317367993082.dkr.ecr.ap-southeast-2.amazonaws.com/cci-repos2:latest",
-                "cpu": 0,
-                "memory": 512,
-                "memoryReservation": 256,
-                "portMappings": [
-                    {
-                        "containerPort": 3001,
-                        "hostPort": 80,
-                        "protocol": "tcp"
-                    }
-                ],
-                "essential": true,
-                "environment": [
-                    {
-                        "name": "NODE_ENV",
-                        "value": "production"
-                    },
-                    {
-                        "name": "APP_ENV",
-                        "value": "test"
-                    },
-                    {
-                        "name": "APP_STUBBED",
-                        "value": "true"
-                    },
-                    {
-                        "name": "APP_DEBUG",
-                        "value": "true"
-                    }
-                ],
-                "mountPoints": [],
-                "volumesFrom": [],
-                "logConfiguration": {
-                    "logDriver": "awslogs",
-                    "options": {
-                        "awslogs-group": "/ecs/cci-task3",
-                        "awslogs-region": "ap-southeast-2",
-                        "awslogs-stream-prefix": "ecs"
-                    }
-                }
-            }
-        ],
-        "family": "cci-task3",
-        "executionRoleArn": "arn:aws:iam::014901580825:role/ecsTaskExecutionRole",
-        "revision": 4,
-        "volumes": [],
-        "status": "ACTIVE",
-        "requiresAttributes": [
-            {
-                "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-            },
-            {
-                "name": "ecs.capability.execution-role-awslogs"
-            },
-            {
-                "name": "com.amazonaws.ecs.capability.ecr-auth"
-            },
-            {
-                "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-            },
-            {
-                "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
-            },
-            {
-                "name": "ecs.capability.execution-role-ecr-pull"
-            }
-        ],
-        "placementConstraints": [],
-        "compatibilities": [
-            "EC2"
-        ],
-        "requiresCompatibilities": [
-            "EC2"
-        ],
-        "cpu": "1024",
-        "memory": "1024",
-        "registeredAt": "2021-03-19T16:28:39.895000+11:00",
-        "registeredBy": "arn:aws:iam::014901580825:user/bm-user-digital-nonprod"
-    }
+    "family": "cci-task3",
+    "executionRoleArn":  arn:aws:iam::014901580825:role/ecsTaskExecutionRole
+    "containerDefinitions": [
+        {
+            "name": "cci-task3",
+            "image": "317367993082.dkr.ecr.ap-southeast-2.amazonaws.com/cci-repos2:latest",
+            "cpu": 1024,
+            "memoryReservation": 1024,
+            "portMappings": [
+              {
+                    "containerPort": 3001,
+                    "hostPort": 80,
+                    "protocol": "tcp"
+              }
+            ],
+            "command": [
+                "./main"
+            ],
+            "essential": true
+        }
+    ]
 }
