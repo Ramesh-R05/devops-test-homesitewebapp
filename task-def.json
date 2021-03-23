@@ -18,8 +18,8 @@
                 "protocol": "tcp"
                 } 
             ],
-          "environment": 
-          [
+            "environment": 
+            [
                 {
                 "name": "NODE_ENV",
                 "value": "production"
@@ -36,22 +36,9 @@
                 "name": "APP_DEBUG",
                 "value": "true"
                 }
-          ],         
-         "logConfiguration": 
-          [
-                {
-                "logDriver": "awslogs",
-                "secretOptions": null,
-                "options": 
-                    {
-                    "awslogs-group": "/ecs/cci-task2",
-                    "awslogs-region": "ap-southeast-2",
-                    "awslogs-stream-prefix": "ecs"
-                    }
-                }
-          ],    
-          "essential": true
-      }      
+            ],         
+            "essential": true
+        }      
     ],
 "family": "cci-task3"
 }
