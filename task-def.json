@@ -1,5 +1,5 @@
 {
-"taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:014901580825:task-definition/cci-task2"    
+"taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:014901580825:task-definition/cci-task2", 
 "executionRoleArn": "arn:aws:iam::014901580825:role/ecsTaskExecutionRole",
 "cpu": "1024",
 "memory": "1024",
