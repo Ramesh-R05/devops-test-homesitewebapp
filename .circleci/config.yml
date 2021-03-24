@@ -98,7 +98,8 @@ workflows:
            verification-timeout: 3m
            max-poll-attempts: 10
            poll-interval: 10
-          #requires:
+           requires:
+             - job-one
             #- aws-ecs/run-task
             #- ecr-buildandpush-dockerimage
 
