@@ -72,11 +72,11 @@ workflows:
   version: 2
   homes-site-build:
     jobs:
-      - ecr-buildandpush-dockerimage
+      #- ecr-buildandpush-dockerimage
 # AWS ECS Create TASK on Existing ECS Cluster
-      - ecs-create-taskdef:
-          requires:
-            - ecr-buildandpush-dockerimage
+      - ecs-create-taskdef
+          #requires:
+            #- ecr-buildandpush-dockerimage
 # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
       - aws-ecs/deploy-service-update:
           cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
