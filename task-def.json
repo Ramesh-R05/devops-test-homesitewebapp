@@ -37,6 +37,16 @@
                 "value": "true"
                 }
             ],
+            "logConfiguration":
+            {
+                "logDriver": "awslogs",
+                "options":
+                {
+                    "awslogs-group": "/ecs/cci-task4",
+                    "awslogs-region": "ap-southeast-2",
+                    "awslogs-stream-prefix": "ecs-cci-task4"
+                }
+            },
             "essential": true
         }
     ],
