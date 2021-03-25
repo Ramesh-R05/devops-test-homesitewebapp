@@ -66,7 +66,7 @@ jobs:
       - aws-ecs/update-task-definition-from-json:
           task-definition-json: task-def.json
 
-# WORKFLOWS 
+# WORKFLOWS
 
 workflows:
   version: 2
@@ -80,7 +80,7 @@ workflows:
 # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
       - aws-ecs/deploy-service-update:
           cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
-          service-name: cci-service1
+          service-name: cci-service-lb-homes-site
           family: cci-task4
           container-image-name-updates: "container=cci-container4,tag=latest"
           skip-task-definition-registration: false
