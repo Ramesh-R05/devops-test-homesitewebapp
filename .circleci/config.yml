@@ -76,17 +76,17 @@ jobs:
 
 # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
 
-       - aws-ecs/deploy-service-update:
-           cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
-           service-name: cci-service1
-           family: cci-task4
-           container-image-name-updates: "container=cci-container4,tag=latest"
-           skip-task-definition-registration: false
-           force-new-deployment: true
-           verify-revision-is-deployed: true
-           verification-timeout: 3m
-           max-poll-attempts: 10
-           poll-interval: 10
+      - aws-ecs/deploy-service-update:
+          cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
+          service-name: cci-service1
+          family: cci-task4
+          container-image-name-updates: "container=cci-container4,tag=latest"
+          skip-task-definition-registration: false
+          force-new-deployment: true
+          verify-revision-is-deployed: true
+          verification-timeout: 3m
+          max-poll-attempts: 10
+          poll-interval: 10
            #requires:
             # - job-one
             #- aws-ecs/run-task
