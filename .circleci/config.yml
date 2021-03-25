@@ -56,7 +56,7 @@ jobs:
           skip-when-tags-exist: false
           tag: 'latest,homes-site-Port3001'
 
-  ecs-deployoncluster-dockerimage:
+  ecs-create-taskdef:
     machine:
       image: ubuntu-1604:202010-01
     #working_directory: ~/homes-site
@@ -65,6 +65,18 @@ jobs:
       - checkout
       - aws-ecs/update-task-definition-from-json:
           task-definition-json: task-def.json
+
+# WORKFLOWS
+
+workflows:
+  version: 2
+  homes-site-build:
+    jobs:
+      - ecr-buildandpush-dockerimage
+# AWS ECS Create TASK on Existing ECS Cluster
+      - ecs-create-taskdef:
+          requires:
+            - ecr-buildandpush-dockerimage
 # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
       - aws-ecs/deploy-service-update:
           cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
@@ -77,15 +89,6 @@ jobs:
           verification-timeout: 3m
           max-poll-attempts: 10
           poll-interval: 10
-
-# WORKFLOWS
-
-workflows:
-  version: 2
-  homes-site-build:
-    jobs:
-      - ecr-buildandpush-dockerimage
-      - ecs-deployoncluster-dockerimage:
           requires:
             - ecr-buildandpush-dockerimage
 
