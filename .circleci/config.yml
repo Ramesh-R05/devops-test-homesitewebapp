@@ -1,5 +1,6 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
 # NodeJS App + Docker + ECR + ECS
+
 # Version 2.1 with AWS ECR and ECS - Homes-Site
 
 version: 2.1
@@ -16,11 +17,12 @@ jobs:
   ecr-buildandpush-dockerimage:
     machine:
       image: ubuntu-1604:202010-01
+    working_directory: ~/homes-site
+
+    steps:
 
 # Prepare the VM for Docker BUILD + NodeJS App
 
-    working_directory: ~/homes-site
-    steps:
       - checkout
       - run: |
           echo "UBUNTU | NVM | NPM | NODE_JS"
@@ -43,6 +45,7 @@ jobs:
           npm rebuild node-sass --force
           npm run test:ci
           NODE_ENV=production npm run build
+
 # AWS ECR Integration: Build and Push NODE JS APP as Docker Image to ECR
 
       - aws-ecr/build-and-push-image:
@@ -58,32 +61,18 @@ jobs:
           skip-when-tags-exist: false
           tag: 'latest,homes-site-Port3001'
 
-  job-one:
+  ecs-deployoncluster-dockerimage:
     machine:
       image: ubuntu-1604:202010-01
+    working_directory: ~/homes-site
+
     steps:
 
-      - checkout
+# Create the task definition using JSON: JSON Location: GIT: devops-test-homesitewebapp\task-def.json
 
+      - checkout
       - aws-ecs/update-task-definition-from-json:
           task-definition-json: task-def.json
-
-      #- aws-ecs/run-task:
-      #    launch-type: EC2
-      #    cluster: cci-app-ecs
-      #    task-definition: cci-task3
-      #    awsvpc: false
-      #    enable-ecs-managed-tags: true
-
-
-# WORKFLOWS
-
-workflows:
-  version: 2
-  homes-site-build:
-    jobs:
-      #- ecr-buildandpush-dockerimage
-       - job-one
 
 # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
 
@@ -98,18 +87,50 @@ workflows:
            verification-timeout: 3m
            max-poll-attempts: 10
            poll-interval: 10
-           requires:
-             - job-one
+           #requires:
+            # - job-one
             #- aws-ecs/run-task
             #- ecr-buildandpush-dockerimage
+
+
+# WORKFLOWS
+
+workflows:
+  version: 2
+  homes-site-build:
+    jobs:
+      - ecr-buildandpush-dockerimage
+      - ecs-deployoncluster-dockerimage:
+          requires:
+            ecr-buildandpush-dockerimage
+
 
 ### END ###
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # AWS ECS RUN_TASK_EC2: Create and Run the Task Def on ECS cluster
 
-          #docker-image-for-job: 317367993082.dkr.ecr.ap-southeast-2.amazonaws.com/cci-repos2:latest
-          #
+      #docker-image-for-job: 317367993082.dkr.ecr.ap-southeast-2.amazonaws.com/cci-repos2:latest
+      #
       #    aws-access-key-id: AWS_ACCESS_KEY_ID
       #    aws-secret-access-key: AWS_SECRET_ACCESS_KEY
 
@@ -131,5 +152,13 @@ workflows:
 
       # Version: 2 / Version:2.1(first few-line on file).
       # Version change from 2.1 > 2.0 (Required by circle_CI for workflow formatting)
+
+      #- aws-ecs/run-task:
+      #    launch-type: EC2
+      #    cluster: cci-app-ecs
+      #    task-definition: cci-task3
+      #    awsvpc: false
+      #    enable-ecs-managed-tags: true
+
 
 ### End ###
