@@ -1,0 +1,33 @@
+{
+  "name": "homes-automation",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "ping": "bash -c \"./features/support/files/ping.sh\"",
+    "ping:homes": "URL=homes-site.test.bxm.net.au npm run ping",
+    "once": "bxm-automation ./config/chimpy.js --tags=@homes --tags=~@manual --browser=chrome --format=rerun:@rerun.txt",
+    "test:mobile": "APP_KEY=homes-mobile node runner.js --tags=@mobile --pMode=mobile",
+    "test:desktop": "APP_KEY=homes-desktop node runner.js --tags=@desktop",
+    "test:tags": "bxm-automation ./config/chimpy.js --browser=phantomjs --format=rerun:@rerun.txt --tags=$0 --tags=~@live",
+    "test:high": "bxm-automation ./config/chimpy.js --browser=chrome --format=rerun:@rerun.txt --tags=@high --tags=~@live",
+    "test:rerun": "bxm-automation ./config/chimpy.js --browser=chrome @rerun.txt",
+    "test:perf": "mocha --require babel-polyfill --require babel-register --reporter spec --recursive perf/lighthouse-tests.js ",
+    "debug": "test-runner ./config/chimpy.js --browser=phantomjs --debug --seleniumDebug",
+    "watch": "bxm-automation ./config/chimpy.js --watch --browser=chrome",
+    "features": "node runner.js --pMode=features",
+    "homes:automation": "URL=http://homes-site.test.bxm.net.au/ APP_KEY=homes-site npm run test:high",
+    "homes:stubbed": "export URL=http://localhost:3001 && export APP_KEY=homes-site && export APP_ENV=test && npm run once",
+    "all:test": "bxm-automation ./config/chimpy.js --browser=chrome --format=rerun:@rerun.txt --tags=@homes --tags=~@cms --tags=~@manual --tags=~@live",
+    "test:cms": "bxm-automation ./config/chimpy.js --browser=chrome --format=rerun:@rerun.txt --tags=@cms --tags=~@manual --tags=~@live",
+    "test:cmsprelive": "bxm-automation .config/chimpy.js --browser=chrome --format=rerun:@rerun.txt --tags=@cmsprelive --tags=~@manual --tags=~@live",
+    "sit:au": "bxm-automation ./config/chimpy.shippable.js --browser=chrome --format=rerun:@rerun.txt --tags=@sitAU --tags=~@live",
+    "test:live": "bxm-automation .config/chimpy.shippable.js --browser=phantomjs --format=rerun:@rerun.txt --tags=@live"
+  },
+  "dependencies": {
+    "@bxm/automation": "^8.0.0",
+    "dotenv": "^8.0.0"
+  },
+  "devDependencies": {
+    "he": "^1.1.1"
+  }
+}
