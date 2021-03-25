@@ -90,7 +90,7 @@ workflows:
           max-poll-attempts: 10
           poll-interval: 10
           requires:
-            - ecr-buildandpush-dockerimage
+            - ecs-create-taskdef
 
 
 ### END ###
