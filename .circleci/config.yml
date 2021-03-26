@@ -80,7 +80,7 @@ workflows:
 # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
       - aws-ecs/deploy-service-update:
           cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
-          service-name: cci-service-lb-homes-site
+          service-name: test-lb-homes-site
           family: test-homes-site
           container-image-name-updates: "container=test-homes-site-docker,tag=latest"
           skip-task-definition-registration: false
