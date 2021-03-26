@@ -5,7 +5,7 @@
 "containerDefinitions":
     [
       {
-            "name": "test-homes-site-docker",
+            "name": "cci-container4",
             "image": "317367993082.dkr.ecr.ap-southeast-2.amazonaws.com/cci-repos2:latest",
             "cpu": 512,
             "memory": 512,
