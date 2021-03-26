@@ -14,7 +14,7 @@
             [
                 {
                 "containerPort": 3001,
-                "hostPort": 30101,
+                "hostPort": 0,
                 "protocol": "tcp"
                 }
             ],
