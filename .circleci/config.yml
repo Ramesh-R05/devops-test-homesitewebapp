@@ -86,9 +86,9 @@ workflows:
           skip-task-definition-registration: false
           force-new-deployment: true
           verify-revision-is-deployed: true
-          verification-timeout: 7m
+          verification-timeout: 9m
           max-poll-attempts: 10
-          poll-interval: 10
+          poll-interval: 60
           requires:
             - ecs-create-taskdef
 
