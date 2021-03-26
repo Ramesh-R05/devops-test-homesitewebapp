@@ -9,7 +9,7 @@
             "image": "317367993082.dkr.ecr.ap-southeast-2.amazonaws.com/cci-repos2:latest",
             "cpu": 512,
             "memory": 512,
-            "memoryReservation": 1024,
+            "memoryReservation": 512,
             "portMappings":
             [
                 {
