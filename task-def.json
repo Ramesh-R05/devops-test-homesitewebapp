@@ -50,6 +50,6 @@
             "essential": true
         }
     ],
-"cpu": "6000",
-"memory": "6000"
+"cpu": "512",
+"memory": "512"
 }
