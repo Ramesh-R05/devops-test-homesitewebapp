@@ -88,7 +88,7 @@ workflows:
           verify-revision-is-deployed: true
           verification-timeout: 9m
           max-poll-attempts: 10
-          poll-interval: 60
+          poll-interval: 100
           requires:
             - ecs-create-taskdef
 
