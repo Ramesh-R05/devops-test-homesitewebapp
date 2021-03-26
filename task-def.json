@@ -1,11 +1,11 @@
 {
-"family": "cci-task4",
+"family": "test-homes-site",
 "requiresCompatibilities": [ "EC2" ],
 "executionRoleArn": "arn:aws:iam::014901580825:role/ecsTaskExecutionRole",
 "containerDefinitions":
     [
       {
-            "name": "cci-container4",
+            "name": "test-homes-site-docker",
             "image": "317367993082.dkr.ecr.ap-southeast-2.amazonaws.com/cci-repos2:latest",
             "cpu": 512,
             "memory": 512,
@@ -44,7 +44,7 @@
                 {
                     "awslogs-group": "/ecs/cci-app-ecs-logs",
                     "awslogs-region": "ap-southeast-2",
-                    "awslogs-stream-prefix": "cci-task4"
+                    "awslogs-stream-prefix": "test-homes-site"
                 }
             },
             "essential": true
