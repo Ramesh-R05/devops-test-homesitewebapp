@@ -21,7 +21,7 @@ jobs:
       - checkout
 
       - run: |
-          echo 'export my_env_var="$CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM-$CIRCLE_BRANCH"' >> $BASH_ENV
+          echo 'export my_env_var=$CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM-$CIRCLE_BRANCH' >> $BASH_ENV
           echo $my_env_var
 
 
