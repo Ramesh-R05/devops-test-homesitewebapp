@@ -21,9 +21,9 @@ jobs:
       - checkout
 
       - run: |
-          echo $CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM >> dkrid.txt
-          cat dkrid.txt
-          
+          echo $CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM >> $my_env_var
+          echo $my_env_var
+
 # Prepare the VM for Docker BUILD + NodeJS App
       - run: |
           echo "UBUNTU | NVM | NPM | NODE_JS"
@@ -101,3 +101,5 @@ workflows:
 
 
 ### END ###
+
+# echo $CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM >> dkrid.txt
