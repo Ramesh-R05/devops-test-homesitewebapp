@@ -23,6 +23,11 @@ jobs:
 # Prepare the VM for Docker BUILD + NodeJS App
       - checkout
       - run: |
+          dkr_id = "$CIRCLE_PROJECT_REPONAME" + "$CIRCLE_BUILD_NUM"
+          dkr_id = "CIRCLE_BRANCH" + dkr_id
+          echo 'export $dkr_id' >> $BASH_ENV
+          printenv
+      - run: |
           echo "UBUNTU | NVM | NPM | NODE_JS"
           echo "### Switching to src dir (/home/circleci/homes-site/src) ###"
           cd src; pwd;
@@ -43,12 +48,6 @@ jobs:
           npm rebuild node-sass --force
           npm run test:ci
           NODE_ENV=production npm run build
-          echo 'export $CIRCLE_BRANCH' >> $BASH_ENV
-          echo 'export $CIRCLE_BUILD_NUM' >> $BASH_ENV
-          dkr_id = "$CIRCLE_PROJECT_REPONAME" + "$CIRCLE_BUILD_NUM"
-          dkr_id = "CIRCLE_BRANCH" + dkr_id
-          echo 'export $dkr_id' >> $BASH_ENV
-          printenv
 
 # AWS ECR Integration: Build and Push NODE JS APP as Docker Image to ECR
       - aws-ecr/build-and-push-image:
