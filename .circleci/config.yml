@@ -20,11 +20,12 @@ jobs:
       DOCKER_IMAGE_ID: "CIRCLE_PROJECT_REPONAME:CIRCLE_BUILD_NUM"
     working_directory: ~/homes-site
     steps:
-# Prepare the VM for Docker BUILD + NodeJS App
       - checkout
+
       - run: |
-          echo 'export dkr_id = "$CIRCLE_PROJECT_REPONAME" + "$CIRCLE_BUILD_NUM" + "_" + $CIRCLE_BRANCH' >> $BASH_ENV          
-          printenv
+          echo 'export dkr_id = "$CIRCLE_PROJECT_REPONAME" + "$CIRCLE_BUILD_NUM" + "_" + $CIRCLE_BRANCH' >> $BASH_ENV
+          echo $dkr_id
+# Prepare the VM for Docker BUILD + NodeJS App          
       - run: |
           echo "UBUNTU | NVM | NPM | NODE_JS"
           echo "### Switching to src dir (/home/circleci/homes-site/src) ###"
