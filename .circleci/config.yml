@@ -16,16 +16,12 @@ jobs:
   ecr-buildandpush-dockerimage:
     machine:
       image: ubuntu-1604:202010-01
-    environment:
-      DOCKER_IMAGE_ID: "CIRCLE_PROJECT_REPONAME:CIRCLE_BUILD_NUM"
     working_directory: ~/homes-site
     steps:
       - checkout
 
       - run: |
-          echo 'export dkr_id = "$CIRCLE_PROJECT_REPONAME" + "$CIRCLE_BUILD_NUM" + "_" + $CIRCLE_BRANCH' >> $BASH_ENV
-          echo $dkr_id >> dkr_id.txt
-          cat dkr_id.txt
+          echo "$CIRCLE_PROJECT_REPONAME --- $CIRCLE_BRANCH --- $CIRCLE_BUILD_NUM"
 
 # Prepare the VM for Docker BUILD + NodeJS App
       - run: |
