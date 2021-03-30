@@ -20,10 +20,6 @@ jobs:
     steps:
       - checkout
 
-      - run: |
-          echo "$CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM" >> $my_env_var
-          echo $my_env_var
-
 # Prepare the VM for Docker BUILD + NodeJS App
       - run: |
           echo "UBUNTU | NVM | NPM | NODE_JS"
@@ -59,19 +55,25 @@ jobs:
           dockerfile: Dockerfile
           no-output-timeout: 20m
           skip-when-tags-exist: false
-          tag: '$DOCKER_IMAGE_ID,homes-site-Port3001'
-
-
+          tag: '$CIRCLE_BUILD_NUM,homes-site-Port3001'
 
 # Create the task definition using JSON: path\devops-test-homesitewebapp\task-def.json
-  ecs-create-taskdef:
-    machine:
-      image: ubuntu-1604:202010-01
-    working_directory: ~/homes-site
-    steps:
-      - checkout
       - aws-ecs/update-task-definition-from-json:
           task-definition-json: task-def.json
+
+# AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
+      - aws-ecs/deploy-service-update: # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
+          cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
+          service-name: cci-service-lb-homes-site
+          family: test-homes-site
+          container-image-name-updates: "container=cci-container4,tag=$CIRCLE_BUILD_NUM"
+          skip-task-definition-registration: false
+          force-new-deployment: true
+          verify-revision-is-deployed: true
+          verification-timeout: 9m
+          max-poll-attempts: 10
+          poll-interval: 120
+
 
 # WORKFLOWS
 
@@ -81,23 +83,23 @@ workflows:
     jobs:
       - ecr-buildandpush-dockerimage # AWS ECR Integration: Build Docker Images and PUSH to ECR
 
-      - ecs-create-taskdef: # AWS ECS Create TASK on Existing ECS Cluster
-          requires:
-            - ecr-buildandpush-dockerimage
+#      - ecs-create-taskdef: # AWS ECS Create TASK on Existing ECS Cluster
+#          requires:
+#            - ecr-buildandpush-dockerimage
 
-      - aws-ecs/deploy-service-update: # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
-          cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
-          service-name: cci-service-lb-homes-site
-          family: test-homes-site
-          container-image-name-updates: "container=cci-container4,tag=$DOCKER_IMAGE_ID"
-          skip-task-definition-registration: false
-          force-new-deployment: true
-          verify-revision-is-deployed: true
-          verification-timeout: 9m
-          max-poll-attempts: 10
-          poll-interval: 120
-          requires:
-            - ecs-create-taskdef
+#      - aws-ecs/deploy-service-update: # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
+#          cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
+#          service-name: cci-service-lb-homes-site
+#          family: test-homes-site
+#          container-image-name-updates: "container=cci-container4,tag=$CIRCLE_BUILD_NUM"
+#          skip-task-definition-registration: false
+#          force-new-deployment: true
+#          verify-revision-is-deployed: true
+#          verification-timeout: 9m
+#          max-poll-attempts: 10
+#          poll-interval: 120
+#          requires:
+#            - ecs-create-taskdef
 
 
 ### END ###
