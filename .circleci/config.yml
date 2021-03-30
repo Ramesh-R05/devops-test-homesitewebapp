@@ -81,13 +81,13 @@ workflows:
   version: 2
   homes-site-build:
     jobs:
-      - ecr-buildandpush-dockerimage
-        filters:
-          branches:
-            only:
-              - master
-              - feature
-              - dependabot
+      - ecr-buildandpush-dockerimage:
+          filters:
+            branches:
+              only:
+                - master
+                - feature
+                - dependabot
 
 
 
