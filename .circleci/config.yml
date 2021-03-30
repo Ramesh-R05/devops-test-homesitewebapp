@@ -24,8 +24,10 @@ jobs:
 
       - run: |
           echo 'export dkr_id = "$CIRCLE_PROJECT_REPONAME" + "$CIRCLE_BUILD_NUM" + "_" + $CIRCLE_BRANCH' >> $BASH_ENV
-          echo $dkr_id
-# Prepare the VM for Docker BUILD + NodeJS App          
+          echo $dkr_id >> dkr_id.txt
+          cat dkr_id.txt
+
+# Prepare the VM for Docker BUILD + NodeJS App
       - run: |
           echo "UBUNTU | NVM | NPM | NODE_JS"
           echo "### Switching to src dir (/home/circleci/homes-site/src) ###"
