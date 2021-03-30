@@ -58,7 +58,7 @@ jobs:
           skip-when-tags-exist: false
           tag: 'latest,homes-site-Port3001'
 
-# Create the task definition using JSON: JSON Location: GIT: devops-test-homesitewebapp\task-def.json
+# Create the task definition using JSON: path\devops-test-homesitewebapp\task-def.json
   ecs-create-taskdef:
     machine:
       image: ubuntu-1604:202010-01
@@ -76,7 +76,7 @@ workflows:
     jobs:
       - ecr-buildandpush-dockerimage # AWS ECR Integration: Build Docker Images and PUSH to ECR
 
-      - ecs-create-taskdef # AWS ECS Create TASK on Existing ECS Cluster
+      - ecs-create-taskdef: # AWS ECS Create TASK on Existing ECS Cluster
           requires:
             - ecr-buildandpush-dockerimage
 
