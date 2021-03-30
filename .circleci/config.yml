@@ -22,6 +22,7 @@ jobs:
       - checkout
       - run: |
           echo "UBUNTU | NVM | NPM | NODE_JS"
+          echo "This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
           echo "### Switching to src dir (/home/circleci/homes-site/src) ###"
           cd src; pwd;
           echo "### Install NVM (Node Version Manager) # Installer for NodeJS + NPM ###"
@@ -80,7 +81,14 @@ workflows:
   version: 2
   homes-site-build:
     jobs:
-      - ecr-buildandpush-dockerimage # AWS ECR Integration: Build Docker Images and PUSH to ECR
+      - ecr-buildandpush-dockerimage
+          filters:
+            branches:
+              only:
+                - master
+                - feature
+                - dependabot
+
 
 
 ### END ###
