@@ -21,11 +21,9 @@ jobs:
       - checkout
 
       - run: |
-          echo 'export my_env_var=$CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM-$CIRCLE_BRANCH' >> $BASH_ENV
-          echo $my_env_var
-          env
-
-
+          echo $CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM >> dkrid.txt
+          cat dkrid.txt
+          
 # Prepare the VM for Docker BUILD + NodeJS App
       - run: |
           echo "UBUNTU | NVM | NPM | NODE_JS"
