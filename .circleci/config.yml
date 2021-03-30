@@ -19,6 +19,7 @@ jobs:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
     steps:
+
 # Prepare the VM for Docker BUILD + NodeJS App
       - checkout
       - run: |
@@ -42,6 +43,7 @@ jobs:
           npm rebuild node-sass --force
           npm run test:ci
           NODE_ENV=production npm run build
+
 # AWS ECR Integration: Build and Push NODE JS APP as Docker Image to ECR
       - aws-ecr/build-and-push-image:
           aws-access-key-id: ECR_AWS_ACCESS_KEY_ID
@@ -56,12 +58,12 @@ jobs:
           skip-when-tags-exist: false
           tag: 'latest,homes-site-Port3001'
 
+# Create the task definition using JSON: JSON Location: GIT: devops-test-homesitewebapp\task-def.json
   ecs-create-taskdef:
     machine:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
     steps:
-# Create the task definition using JSON: JSON Location: GIT: devops-test-homesitewebapp\task-def.json
       - checkout
       - aws-ecs/update-task-definition-from-json:
           task-definition-json: task-def.json
@@ -72,13 +74,13 @@ workflows:
   version: 2
   homes-site-build:
     jobs:
-      #- ecr-buildandpush-dockerimage
-# AWS ECS Create TASK on Existing ECS Cluster
-      - ecs-create-taskdef
-          #requires:
-            #- ecr-buildandpush-dockerimage
-# AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
-      - aws-ecs/deploy-service-update:
+      - ecr-buildandpush-dockerimage # AWS ECR Integration: Build Docker Images and PUSH to ECR
+
+      - ecs-create-taskdef # AWS ECS Create TASK on Existing ECS Cluster
+          requires:
+            - ecr-buildandpush-dockerimage
+
+      - aws-ecs/deploy-service-update: # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
           cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
           service-name: cci-service-lb-homes-site
           family: test-homes-site
