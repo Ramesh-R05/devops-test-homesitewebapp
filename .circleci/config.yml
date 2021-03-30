@@ -21,7 +21,7 @@ jobs:
       - checkout
 
       - run: |
-          echo ""$CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM" >> $my_env_var
+          echo "$CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM" >> $my_env_var
           echo $my_env_var
 
 # Prepare the VM for Docker BUILD + NodeJS App
