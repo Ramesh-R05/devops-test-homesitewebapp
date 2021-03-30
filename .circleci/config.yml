@@ -8,7 +8,7 @@ version: 2.1
 
 orbs:
   aws-ecr: circleci/aws-ecr@6.15.3
-  aws-ecs: circleci/aws-ecs@2.0.0
+  aws-ecs: circleci/aws-ecs@2.1.0
 
 # JOBS
 
@@ -18,9 +18,8 @@ jobs:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
     steps:
-      - checkout
-
 # Prepare the VM for Docker BUILD + NodeJS App
+      - checkout
       - run: |
           echo "UBUNTU | NVM | NPM | NODE_JS"
           echo "### Switching to src dir (/home/circleci/homes-site/src) ###"
@@ -55,18 +54,18 @@ jobs:
           dockerfile: Dockerfile
           no-output-timeout: 20m
           skip-when-tags-exist: false
-          tag: '$CIRCLE_BUILD_NUM,homes-site-Port3001'
+          tag: 'latest,$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM'
 
 # Create the task definition using JSON: path\devops-test-homesitewebapp\task-def.json
       - aws-ecs/update-task-definition-from-json:
           task-definition-json: task-def.json
 
 # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
-      - aws-ecs/update-service: # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
+      - aws-ecs/update-service:
           cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
           service-name: cci-service-lb-homes-site
           family: test-homes-site
-          container-image-name-updates: "container=cci-container4,tag=$CIRCLE_BUILD_NUM"
+          container-image-name-updates: "container=cci-container4,tag=latest"
           skip-task-definition-registration: false
           force-new-deployment: true
           verify-revision-is-deployed: true
@@ -82,6 +81,11 @@ workflows:
   homes-site-build:
     jobs:
       - ecr-buildandpush-dockerimage # AWS ECR Integration: Build Docker Images and PUSH to ECR
+
+
+### END ###
+
+
 
 #      - ecs-create-taskdef: # AWS ECS Create TASK on Existing ECS Cluster
 #          requires:
@@ -100,8 +104,5 @@ workflows:
 #          poll-interval: 120
 #          requires:
 #            - ecs-create-taskdef
-
-
-### END ###
 
 # echo $CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM >> dkrid.txt
