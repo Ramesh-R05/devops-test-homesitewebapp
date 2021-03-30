@@ -23,6 +23,7 @@ jobs:
       - run: |
           echo 'export my_env_var=$CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM-$CIRCLE_BRANCH' >> $BASH_ENV
           echo $my_env_var
+          env
 
 
 # Prepare the VM for Docker BUILD + NodeJS App
