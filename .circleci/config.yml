@@ -58,8 +58,8 @@ jobs:
           tag: '$CIRCLE_BUILD_NUM,homes-site-Port3001'
 
 # Create the task definition using JSON: path\devops-test-homesitewebapp\task-def.json
-      - aws-ecs/update-task-definition-from-json:
-          task-definition-json: task-def.json
+#      - aws-ecs/update-task-definition-from-json:
+#          task-definition-json: task-def.json
 
 # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
       - aws-ecs/deploy-service-update: # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
