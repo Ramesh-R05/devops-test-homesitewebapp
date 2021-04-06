@@ -90,9 +90,9 @@ workflows:
               only:
                 - circleci-project-setup
                 - master
-                - fix/*/
-                - feature/*/
-                - dependabot/*/
+                - fix/.*/
+                - feature/.*/
+                - dependabot/.*/
 
 
 
