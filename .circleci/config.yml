@@ -25,6 +25,7 @@ jobs:
 # Prepare the VM for NodeJS App Build
       - run: |
           cci_branch_namex="$(sed 's/\//-/g' \<< $CIRCLE_BRANCH-$CIRCLE_BUILD_NUM)"
+          echo 'export $cci_branch_namex' >> $BASH_ENV
           echo -e "\n\n ### UBUNTU | NVM | NPM | NODE_JS ###"
           echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
           echo -e "\n ### Switching to src dir (/home/circleci/homes-site/src) ###"
@@ -62,7 +63,7 @@ jobs:
           no-output-timeout: 20m
           skip-when-tags-exist: false
           #tag: 'latest,$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM'
-          tag: 'latest,$cci_branch_name'
+          tag: 'latest,$cci_branch_namex'
 # AWS ECS Integration: Create a task definition using JSON: path-to/json-file.json
 #      - aws-ecs/update-task-definition-from-json:
 #          task-definition-json: task-def.json
