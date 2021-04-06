@@ -21,7 +21,7 @@ jobs:
       - checkout
       - run: |
           source ~/.profile
-          cci_branch_name=$(echo $CIRCLE_BRANCH | sed -e 's/\//-/g')
+          CCI_BRANCH_NAME=$(echo $CIRCLE_BRANCH | sed -e 's/\//-/g')
           echo -e "\n\n\n ### CCI_BRANCHNAME: $CCI_BRANCH_NAME"
           echo 'export $CCI_BRANCH_NAME' >> $BASH_ENV
           env
