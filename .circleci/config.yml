@@ -39,7 +39,7 @@ jobs:
           echo -e "\n ### Node Version : $(node --version) - Node Version (Installed) ###"
           echo -e "\n ### Setting NPM Registry as BXM ###"
           npm set @bxm:registry http://npm.digital.bauer-media.net.au
-          echo -e "\n ### NPM > Install src/package.json > Node_Rebuild > Node_Test ###"
+          echo -e "\n ### NPM > Install src/package.json > Node_Rebuild > Node_Test > Node_Env Set ###"
           npm install
           npm rebuild node-sass --force
           npm run test:ci
