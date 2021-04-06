@@ -23,34 +23,28 @@ jobs:
           CCI_BRANCH_NAME=$(echo $CIRCLE_BRANCH | sed -e 's/\//-/g')
           echo -e "\n\n\n ### CCI_BRANCHNAME: $CCI_BRANCH_NAME"
           echo "export CCI_BRANCH=$CCI_BRANCH_NAME" >> $BASH_ENV
-          env
-
-
-
+          env | grep -i CCI_BRANCH
 
 # Prepare the VM for NodeJS App Build
-#      - run: |
-#          echo -e "\n\n ### UBUNTU | NVM | NPM | NODE_JS ###"
+      - run: |
+          echo -e "\n\n ### UBUNTU | NVM | NPM | NODE_JS ###"
 #          echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
-#          echo -e "\n ### Switching to src dir (/home/circleci/homes-site/src) ###"
-#          cd src; pwd;
-#          echo -e "\n ### Install NVM (Node Version Manager) # Installer for NodeJS + NPM ###"
-#          curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+          echo -e "\n ### Switching to src dir (/home/circleci/homes-site/src) ###"
+          cd src; pwd;
+          echo -e "\n ### Install NVM (Node Version Manager) # Installer for NodeJS + NPM ###"
+          curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
 #          source ~/.profile
-#          cci_branch_name=$(echo $CIRCLE_BRANCH | sed -e 's/\//-/g')
-#          echo -e "\n\n\n ### CCI_BRANCHNAME: $cci_branch_name"
-#          echo 'export $cci_branch_name' >> $BASH_ENV
-#          nvm install v10.19.0
-#          nvm use v10.19.0;
-#          echo -e "\n ### Print Version Information ###"
-#          echo -e "\n ### NVM Version  : $(nvm --version) ###"
-#          echo -e "\n ### NPM Version  : $(npm --version) ###"
-#          echo -e "\n ### Node Version : $(node --version) ###"
-#          echo -e "\n ### Setting NPM Registry as BXM ###"
-#          npm install
-#          npm rebuild node-sass --force
-#          npm run test:ci
-#          NODE_ENV=production npm run build
+          nvm install v10.19.0
+          nvm use v10.19.0;
+          echo -e "\n ### Print Version Information ###"
+          echo -e "\n ### NVM Version  : $(nvm --version) ###"
+          echo -e "\n ### NPM Version  : $(npm --version) ###"
+          echo -e "\n ### Node Version : $(node --version) ###"
+          echo -e "\n ### Setting NPM Registry as BXM ###"
+          npm install
+          npm rebuild node-sass --force
+          npm run test:ci
+          NODE_ENV=production npm run build
 
 # AWS ECR Integration: Build and Push Docker Image to ECR
       - aws-ecr/build-and-push-image:
@@ -66,6 +60,7 @@ jobs:
           skip-when-tags-exist: false
           #tag: 'latest,$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM'
           tag: 'latest,$CCI_BRANCH.$CIRCLE_BUILD_NUM'
+
 # AWS ECS Integration: Create a task definition using JSON: path-to/json-file.json
 #      - aws-ecs/update-task-definition-from-json:
 #          task-definition-json: task-def.json
