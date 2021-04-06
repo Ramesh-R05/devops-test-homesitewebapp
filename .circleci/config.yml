@@ -46,10 +46,12 @@ jobs:
           echo -e "\n ### NPM Version  : $(npm --version) ###"
           echo -e "\n ### Node Version : $(node --version) ###"
           echo -e "\n ### Setting NPM Registry as BXM ###"
+          npm set @bxm:registry http://npm.digital.bauer-media.net.au
           npm install
           npm rebuild node-sass --force
           npm run test:ci
           NODE_ENV=production npm run build
+
 
 # AWS ECR Integration: Build and Push Docker Image to ECR
       - aws-ecr/build-and-push-image:
