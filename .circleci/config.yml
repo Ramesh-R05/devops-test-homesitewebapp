@@ -20,7 +20,7 @@ jobs:
     steps:
       - checkout
 
-# Spin-Up + Prepare the VM for Docker BUILD of NodeJS App:
+# Prepare the VM for NodeJS App Build
       - run: |
           echo -e "\n\n ### UBUNTU | NVM | NPM | NODE_JS ###"
           echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
@@ -34,8 +34,9 @@ jobs:
           echo -e "\n ### Setting Default NVM v10.19.0 ###"
           nvm use v10.19.0;
           echo -e "\n ### Print Version Information ###"
-          echo -e "\n ### Node Version : $(node --version) ###"
-          echo -e "\n ### NPM Version  : $(npm --version) ###"
+          echo -e "\n ### NVM Version  : $(nvm --version)  - Node Version Manager ###"
+          echo -e "\n ### NPM Version  : $(npm --version)  - Node Package Manager ###"
+          echo -e "\n ### Node Version : $(node --version) - Node Version (Installed) ###"
           echo -e "\n ### Setting NPM Registry as BXM ###"
           npm set @bxm:registry http://npm.digital.bauer-media.net.au
           echo -e "\n ### NPM > Install src/package.json > Node_Rebuild > Node_Test ###"
@@ -44,7 +45,7 @@ jobs:
           npm run test:ci
           NODE_ENV=production npm run build
 
-# AWS ECR Integration: Build and Push NODE JS APP as Docker Image to ECR
+# AWS ECR Integration: Build and Push Docker Image to ECR
       - aws-ecr/build-and-push-image:
           aws-access-key-id: ECR_AWS_ACCESS_KEY_ID
           aws-secret-access-key: ECR_AWS_SECRET_ACCESS_KEY
@@ -62,7 +63,7 @@ jobs:
 #      - aws-ecs/update-task-definition-from-json:
 #          task-definition-json: task-def.json
 
-# AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
+# AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR | Deploy-NodeJS-APP ]
 #      - aws-ecs/update-service:
 #          cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
 #          service-name: cci-service-lb-homes-site
