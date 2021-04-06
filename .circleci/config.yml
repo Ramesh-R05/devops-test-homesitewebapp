@@ -28,7 +28,6 @@ jobs:
 # Prepare the VM for NodeJS App Build
       - run: |
           echo -e "\n\n ### UBUNTU | NVM | NPM | NODE_JS ###"
-#          echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
           echo -e "\n ### Switching to src dir (/home/circleci/homes-site/src) ###"
           cd src; pwd;
           echo -e "\n ### Install NVM (Node Version Manager) # Installer for NodeJS + NPM ###"
@@ -100,3 +99,6 @@ workflows:
 
 
 ### END ###
+
+
+#          echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
