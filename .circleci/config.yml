@@ -27,7 +27,6 @@ jobs:
 # Prepare the VM for NodeJS App Build
       - run: |
           echo -e "\n\n\n ### UBUNTU | NVM | NPM | NODE_JS ###"
-          echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
           echo -e "\n ### Switching to src dir (/home/circleci/homes-site/src) ###"
           cd src; pwd;
           echo -e "\n ### Install NVM (Node Version Manager) # Installer for NodeJS + NPM ###"
@@ -37,12 +36,12 @@ jobs:
           nvm install v10.19.0
           echo -e "\n ### Setting Default NVM v10.19.0 ###"
           nvm use v10.19.0;
+          echo -e "\n ### Setting NPM Registry as BXM ###"
+          npm set @bxm:registry http://npm.digital.bauer-media.net.au
           echo -e "\n ### Print Version Information ###"
           echo -e "\n ### NVM Version  : $(nvm --version) ###"
           echo -e "\n ### NPM Version  : $(npm --version) ###"
           echo -e "\n ### Node Version : $(node --version) ###"
-          echo -e "\n ### Setting NPM Registry as BXM ###"
-          npm set @bxm:registry http://npm.digital.bauer-media.net.au
           npm install
           npm rebuild node-sass --force
           npm run test:ci
@@ -107,7 +106,7 @@ workflows:
 
 ### END ###
 
-
+#          echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
 #          echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
 #          source ~/.profile
 #          tag: 'latest,$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM'
