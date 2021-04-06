@@ -1,6 +1,6 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
-# NodeJS App + Docker + ECR + ECS
-# Version 2.1 with AWS ECR and ECS - Homes-Site
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference # NodeJS App + Docker + ECR + ECS
+
+# Version 2.1 with ORBS for AWS ECR | ECS and DOCKER - Homes-Site
 
 version: 2.1
 
@@ -24,13 +24,9 @@ jobs:
           echo -e "\n\n\n ### CCI_BRANCHNAME: $CCI_BRANCH_NAME"
           echo "export CCI_BRANCH=$CCI_BRANCH_NAME" >> $BASH_ENV
 
-      - run:
-          name: CCI BRANCH ENV SETTING
-          command: env | grep -i cci
-
 # Prepare the VM for NodeJS App Build
       - run: |
-          echo -e "\n\n ### UBUNTU | NVM | NPM | NODE_JS ###"
+          echo -e "\n\n\n ### UBUNTU | NVM | NPM | NODE_JS ###"
           echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
           echo -e "\n ### Switching to src dir (/home/circleci/homes-site/src) ###"
           cd src; pwd;
@@ -52,6 +48,10 @@ jobs:
           npm run test:ci
           NODE_ENV=production npm run build
 
+# Print CCI_BRANCH to use with ECR/DOCKER
+      - run:
+          name: CCI BRANCH ENV SETTING
+          command: env | grep -i cci
 
 # AWS ECR Integration: Build and Push Docker Image to ECR
       - aws-ecr/build-and-push-image:
@@ -65,7 +65,6 @@ jobs:
           dockerfile: Dockerfile
           no-output-timeout: 20m
           skip-when-tags-exist: false
-          #tag: 'latest,$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM'
           tag: 'latest,$CCI_BRANCH.$CIRCLE_BUILD_NUM'
 
 # AWS ECS Integration: Create a task definition using JSON: path-to/json-file.json
@@ -111,3 +110,4 @@ workflows:
 
 #          echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
 #          source ~/.profile
+#          tag: 'latest,$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM'
