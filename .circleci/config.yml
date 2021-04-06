@@ -44,7 +44,7 @@ jobs:
           npm rebuild node-sass --force
           npm run test:ci
           NODE_ENV=production npm run build
-          cci_branch_name="$(sed 's/\//-/g' <<< $CIRCLE_BRANCH-$CIRCLE_BUILD_NUM)"
+          cci_branch_name="$(sed 's/\//-/g' \<< $CIRCLE_BRANCH-$CIRCLE_BUILD_NUM)"
           echo 'export $cci_branch_name' >> $BASH_ENV
 
 # AWS ECR Integration: Build and Push Docker Image to ECR
