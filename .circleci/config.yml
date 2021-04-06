@@ -1,6 +1,6 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
-
-# Version 2.1 with AWS ECR and ECS - Homes-Site # NodeJS App + Docker + ECR + ECS
+# NodeJS App + Docker + ECR + ECS
+# Version 2.1 with AWS ECR and ECS - Homes-Site
 
 version: 2.1
 
@@ -18,26 +18,27 @@ jobs:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
     steps:
-# Prepare the VM for Docker BUILD + NodeJS App
       - checkout
+
+# Spin-Up + Prepare the VM for Docker BUILD of NodeJS App:
       - run: |
-          echo "UBUNTU | NVM | NPM | NODE_JS"
-          echo "This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
-          echo "### Switching to src dir (/home/circleci/homes-site/src) ###"
+          echo -e "\n\n ### UBUNTU | NVM | NPM | NODE_JS ###"
+          echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
+          echo -e "\n ### Switching to src dir (/home/circleci/homes-site/src) ###"
           cd src; pwd;
-          echo "### Install NVM (Node Version Manager) # Installer for NodeJS + NPM ###"
+          echo -e "\n ### Install NVM (Node Version Manager) # Installer for NodeJS + NPM ###"
           curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
           source ~/.profile
-          echo "### Install NVM v10.19.0 ###"
+          echo -e "\n ### Install NVM v10.19.0 ###"
           nvm install v10.19.0
-          echo "### Setting Default NVM v10.19.0 ###"
+          echo -e "\n ### Setting Default NVM v10.19.0 ###"
           nvm use v10.19.0;
-          echo "### Print Version Information ###"
-          echo "Node Version : $(node --version)"
-          echo "NPM Version  : $(npm --version)"
-          echo "### Setting NPM Registry as BXM ###"
+          echo -e "\n ### Print Version Information ###"
+          echo -e "\n ### Node Version : $(node --version) ###"
+          echo -e "\n ### NPM Version  : $(npm --version) ###"
+          echo -e "\n ### Setting NPM Registry as BXM ###"
           npm set @bxm:registry http://npm.digital.bauer-media.net.au
-          echo "### NPM > Install src/package.json > Node_Rebuild > Node_Test ###"
+          echo -e "\n ### NPM > Install src/package.json > Node_Rebuild > Node_Test ###"
           npm install
           npm rebuild node-sass --force
           npm run test:ci
@@ -57,23 +58,22 @@ jobs:
           skip-when-tags-exist: false
           tag: 'latest,$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM'
 
-# Create the task definition using JSON: path\devops-test-homesitewebapp\task-def.json
-      - aws-ecs/update-task-definition-from-json:
-          task-definition-json: task-def.json
+# AWS ECS Integration: Create a task definition using JSON: path-to/json-file.json
+#      - aws-ecs/update-task-definition-from-json:
+#          task-definition-json: task-def.json
 
 # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
-      - aws-ecs/update-service:
-          cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
-          service-name: cci-service-lb-homes-site
-          family: test-homes-site
-          container-image-name-updates: "container=cci-container4,tag=latest"
-          skip-task-definition-registration: false
-          force-new-deployment: true
-          verify-revision-is-deployed: true
-          verification-timeout: 9m
-          max-poll-attempts: 10
-          poll-interval: 120
-
+#      - aws-ecs/update-service:
+#          cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
+#          service-name: cci-service-lb-homes-site
+#          family: test-homes-site
+#          container-image-name-updates: "container=cci-container4,tag=latest"
+#          skip-task-definition-registration: false
+#          force-new-deployment: true
+#          verify-revision-is-deployed: true
+#          verification-timeout: 9m
+#          max-poll-attempts: 10
+#          poll-interval: 120
 
 # WORKFLOWS
 
@@ -87,31 +87,10 @@ workflows:
               only:
                 - circleci-project-setup
                 - master
+                - fix
                 - feature
                 - dependabot
 
 
 
 ### END ###
-
-
-
-#      - ecs-create-taskdef: # AWS ECS Create TASK on Existing ECS Cluster
-#          requires:
-#            - ecr-buildandpush-dockerimage
-
-#      - aws-ecs/deploy-service-update: # AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR ]
-#          cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
-#          service-name: cci-service-lb-homes-site
-#          family: test-homes-site
-#          container-image-name-updates: "container=cci-container4,tag=$CIRCLE_BUILD_NUM"
-#          skip-task-definition-registration: false
-#          force-new-deployment: true
-#          verify-revision-is-deployed: true
-#          verification-timeout: 9m
-#          max-poll-attempts: 10
-#          poll-interval: 120
-#          requires:
-#            - ecs-create-taskdef
-
-# echo $CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM >> dkrid.txt
