@@ -44,7 +44,7 @@ jobs:
           npm rebuild node-sass --force
           npm run test:ci
           NODE_ENV=production npm run build
-          cci_branch_name="$(sed 's/\//-/g' \<< $CIRCLE_BRANCH-$CIRCLE_BUILD_NUM)"
+          cci_branch_name="$(sed 's/\//-/g' \<< $CIRCLE_BRANCH)"
           echo 'export $cci_branch_name' >> $BASH_ENV
 
 # AWS ECR Integration: Build and Push Docker Image to ECR
@@ -60,7 +60,7 @@ jobs:
           no-output-timeout: 20m
           skip-when-tags-exist: false
           #tag: 'latest,$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM'
-          tag: 'latest,$cci_branch_name'
+          tag: 'latest,$cci_branch_name-$CIRCLE_BUILD_NUM'
 # AWS ECS Integration: Create a task definition using JSON: path-to/json-file.json
 #      - aws-ecs/update-task-definition-from-json:
 #          task-definition-json: task-def.json
