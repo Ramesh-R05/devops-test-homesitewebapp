@@ -91,7 +91,7 @@ workflows:
                 - circleci-project-setup
                 - master
                 - fix*
-                - /feature-.*/
+                - /feature.*/
                 - dependabot*
 
 
