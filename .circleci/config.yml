@@ -20,10 +20,9 @@ jobs:
     steps:
       - checkout
       - run: |
-          source ~/.profile
           CCI_BRANCH_NAME=$(echo $CIRCLE_BRANCH | sed -e 's/\//-/g')
           echo -e "\n\n\n ### CCI_BRANCHNAME: $CCI_BRANCH_NAME"
-          echo 'export CCI_BRANCH=$CCI_BRANCH_NAME' >> $BASH_ENV
+          echo "export CCI_BRANCH=$CCI_BRANCH_NAME" >> $BASH_ENV
           env
 
 
@@ -59,7 +58,7 @@ jobs:
           aws-secret-access-key: ECR_AWS_SECRET_ACCESS_KEY
           account-url: AWS_ECR_ACCOUNT_URL
           region: AWS_DEFAULT_REGION
-          profile-name: profile1
+#          profile-name: profile1
           repo: cci-repos2
           create-repo: true
           dockerfile: Dockerfile
