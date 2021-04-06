@@ -87,12 +87,12 @@ workflows:
             branches:
               ignore:
                 - main
-              only:                
+              only:
                 - circleci-project-setup
                 - master
-                - fix
-                - feature/DIG-939-styling-lipgloss
-                - dependabot
+                - fix/*/
+                - feature/*/
+                - dependabot/*/
 
 
 
