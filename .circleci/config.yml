@@ -31,12 +31,15 @@ jobs:
 # Prepare the VM for NodeJS App Build
       - run: |
           echo -e "\n\n ### UBUNTU | NVM | NPM | NODE_JS ###"
+          echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
           echo -e "\n ### Switching to src dir (/home/circleci/homes-site/src) ###"
           cd src; pwd;
           echo -e "\n ### Install NVM (Node Version Manager) # Installer for NodeJS + NPM ###"
           curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
           source ~/.profile
+          echo -e "\n ### Install NVM v10.19.0 ###"
           nvm install v10.19.0
+          echo -e "\n ### Setting Default NVM v10.19.0 ###"
           nvm use v10.19.0;
           echo -e "\n ### Print Version Information ###"
           echo -e "\n ### NVM Version  : $(nvm --version) ###"
