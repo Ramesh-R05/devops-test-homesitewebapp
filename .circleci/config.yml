@@ -35,6 +35,7 @@ jobs:
           cd src; pwd;
           echo -e "\n ### Install NVM (Node Version Manager) # Installer for NodeJS + NPM ###"
           curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+          source ~/.profile
           nvm install v10.19.0
           nvm use v10.19.0;
           echo -e "\n ### Print Version Information ###"
@@ -53,7 +54,7 @@ jobs:
           aws-secret-access-key: ECR_AWS_SECRET_ACCESS_KEY
           account-url: AWS_ECR_ACCOUNT_URL
           region: AWS_DEFAULT_REGION
-#          profile-name: profile1
+          profile-name: profile
           repo: cci-repos2
           create-repo: true
           dockerfile: Dockerfile
