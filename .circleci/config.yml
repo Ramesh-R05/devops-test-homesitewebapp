@@ -36,7 +36,7 @@ jobs:
           echo -e "\n ### Print Version Information ###"
           echo -e "\n ### NVM Version  : $(nvm --version)  - Node Version Manager ###"
           echo -e "\n ### NPM Version  : $(npm --version)  - Node Package Manager ###"
-          echo -e "\n ### Node Version : $(node --version) - Node Version (Installed) ###"
+          echo -e "\n ### Node Version : $(node --version) - NodeJS Version ###"
           echo -e "\n ### Setting NPM Registry as BXM ###"
           npm set @bxm:registry http://npm.digital.bauer-media.net.au
           echo -e "\n ### NPM > Install src/package.json > Node_Rebuild > Node_Test ###"
