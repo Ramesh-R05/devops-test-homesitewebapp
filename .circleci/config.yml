@@ -30,6 +30,7 @@ jobs:
           curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
           source ~/.profile
           cci_branch_name=$(echo $CIRCLE_BRANCH | sed -e 's/\//-/g')
+          echo -e "\n\n\n ### CCI_BRANCHNAME: $cci_branch_name"
           echo 'export $cci_branch_name' >> $BASH_ENV
           echo -e "\n ### Install NVM v10.19.0 ###"
           nvm install v10.19.0
