@@ -17,6 +17,8 @@ jobs:
     machine:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
+    environment:
+      cci_branch_name: "$(sed 's/\//-/g' << $CIRCLE_BRANCH-$CIRCLE_BUILD_NUM)"
     steps:
       - checkout
 
@@ -44,7 +46,6 @@ jobs:
           npm rebuild node-sass --force
           npm run test:ci
           NODE_ENV=production npm run build
-          cci_branch_name="$(sed 's/\//-/g' \<< $CIRCLE_BRANCH-$CIRCLE_BUILD_NUM)"
 
 # AWS ECR Integration: Build and Push Docker Image to ECR
       - aws-ecr/build-and-push-image:
