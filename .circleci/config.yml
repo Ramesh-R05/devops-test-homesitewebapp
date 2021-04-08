@@ -52,8 +52,10 @@ jobs:
             NODE_ENV=production npm run build
 
 # SET CCI_BRANCH to use with ECR/DOCKER
-        - run: name: SET ENV - BRANCH_NAME command: | CCI_BRANCH_NAME=$(echo
-            $CIRCLE_BRANCH | sed -e 's/\//-/g') echo "export
+        - run:
+            name: SET ENV - BRANCH_NAME
+            command: |
+            CCI_BRANCH_NAME=$(echo $CIRCLE_BRANCH | sed -e 's/\//-/g') echo "export
             CCI_BRANCH=$CCI_BRANCH_NAME" >> $BASH_ENV
 
 # Print CCI_BRANCH to use with ECR/DOCKER - Verify
