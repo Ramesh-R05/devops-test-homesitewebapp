@@ -43,7 +43,7 @@ jobs:
                 fi
       - when:
           condition:
-            equal: [ master, $CCI_BRANCH ]
+            equal: [ master, << pipeline.git.branch >> ]
           steps:
             - run: echo "ENV_BUILD=$ENV_BUILD"
             - aws-ecs/update-task-definition-from-json:
