@@ -54,7 +54,7 @@ jobs:
 # Print CCI_BRANCH to use with ECR/DOCKER - Verify
       - run:
           name: GET ENV - BRANCH_NAME
-          command: echo "CCI_BRANCH_NAME: $CCI_BRANCH" ; echo "ENV_BUILD: $ENV_BUILD"; echo -e "\n\n\n"; printenv;
+          command: echo "CCI_BRANCH_NAME=$CCI_BRANCH" ; echo "ENV_BUILD=$ENV_BUILD"; echo -e "\n\n\n"; printenv;
 
 # AWS ECR Integration: Build and Push Docker Image to ECR
 #      - aws-ecr/build-and-push-image:
