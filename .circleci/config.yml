@@ -43,11 +43,11 @@ jobs:
                 fi
       - when:
           condition:
-            equal: [ TEST, $ENV_BUILD ]
+            equal: [ master, $CCI_BRANCH ]
           steps:
             - run: echo "ENV_BUILD=$ENV_BUILD"
             - aws-ecs/update-task-definition-from-json:
-                task-definition-json: task-def-$ENV_BUILD.json
+                task-definition-json: task-def.json
 
 
 #      - aws-ecs/update-task-definition-from-json:
