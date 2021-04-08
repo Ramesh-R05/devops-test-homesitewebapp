@@ -67,9 +67,10 @@ jobs:
 workflows:
   version: 2
   homes-site-build:
-    jobs:
-      - ecr-buildandpush-dockerimage1            
+    jobs:      
       - ecr-buildandpush-dockerimage:
+          requires:
+            - ecr-buildandpush-dockerimage1
           filters:
             branches:
               ignore:
