@@ -1,0 +1,92 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference # NodeJS App + Docker + ECR + ECS
+
+# Version 2.1 with ORBS for AWS ECR | ECS and DOCKER - Homes-Site
+
+version: 2.1
+
+# ORBS
+
+orbs:
+  aws-ecr: circleci/aws-ecr@6.15.3
+  aws-ecs: circleci/aws-ecs@2.1.0
+
+# EXECUTOR
+
+executors:
+  my-executor:
+    machine:
+      image: ubuntu-1604:202010-01
+    working_directory: ~/homes-site
+
+# JOBS
+
+jobs:
+  ecr-buildandpush-dockerimage:
+    executor: my-executor
+    steps:
+      - checkout
+# SET CCI_BRANCH to use with ECR/DOCKER
+      - run:
+          name: SET ENV - BRANCH_NAME
+          command: CCI_BRANCH_NAME=$(echo $CIRCLE_BRANCH | sed -e 's/\//-/g'); echo "export CCI_BRANCH=$CCI_BRANCH_NAME" >> $BASH_ENV
+
+# Print CCI_BRANCH to use with ECR/DOCKER - Verify
+      - run:
+          name: GET ENV - BRANCH_NAME
+          command: env | grep -i cci
+
+
+  ecr-buildandpush-dockerimage1:
+    executor: my-executor
+    steps:
+      - run:
+          name: GET ENV - BRANCH_NAME
+          command: env | grep -i cci
+
+
+
+# AWS ECS Integration: Create a task definition using JSON: path-to/json-file.json
+#      - aws-ecs/update-task-definition-from-json:
+#          task-definition-json: task-def.json
+
+# AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR | Deploy-NodeJS-APP ]
+#      - aws-ecs/update-service:
+#          cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
+#          service-name: cci-service-lb-homes-site
+#          family: test-homes-site
+#          container-image-name-updates: "container=cci-container4,tag=latest"
+#          skip-task-definition-registration: false
+#          force-new-deployment: true
+#          verify-revision-is-deployed: true
+#          verification-timeout: 9m
+#          max-poll-attempts: 10
+#          poll-interval: 120
+
+# WORKFLOWS
+
+workflows:
+  version: 2
+  homes-site-build:
+    jobs:
+      - ecr-buildandpush-dockerimage1                  
+      - ecr-buildandpush-dockerimage:
+          requires:
+            - ecr-buildandpush-dockerimage1
+          filters:
+            branches:
+              ignore:
+                - main
+              only:
+                - circleci-project-setup
+                - master
+                - /fix.*/
+                - /feature.*/
+                - /dependabot.*/
+
+### END ###
+
+#          echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
+#          echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
+#          source ~/.profile
+#          tag: 'latest,$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM'
+#          echo -e "\n\n\n ### CCI_BRANCHNAME: $CCI_BRANCH_NAME"
