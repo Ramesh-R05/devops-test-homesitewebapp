@@ -53,6 +53,7 @@ jobs:
             echo "export CCI_BRANCH=$CCI_BRANCH_NAME" >> $BASH_ENV
 
 # Print CCI_BRANCH to use with ECR/DOCKER - Verify
+      - run:
           name: GET ENV - BRANCH_NAME
           command: env | grep -i cci
 
