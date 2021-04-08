@@ -52,7 +52,7 @@ jobs:
 # Print CCI_BRANCH to use with ECR/DOCKER - Verify
       - run:
           name: Get CCI_BRANCH_NAME
-          command: env | grep -i CCI*
+          command: echo "CCI_BRANCH=$CCI_BRANCH"
 
 # AWS ECR Integration: Build and Push Docker Image to ECR
       - aws-ecr/build-and-push-image:
