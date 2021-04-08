@@ -10,16 +10,23 @@ orbs:
   aws-ecr: circleci/aws-ecr@6.15.3
   aws-ecs: circleci/aws-ecs@2.1.0
 
+# EXECUTOR
+
+executors:
+  my-executor:
+    machine:
+      image: ubuntu-1604:202010-01
+    working_directory: ~/homes-site
+
 # JOBS
 
 jobs:
   ecr-buildandpush-dockerimage:
-    machine:
-      image: ubuntu-1604:202010-01
-    working_directory: ~/homes-site
+    executors: my-executor
     steps:
+# Checkout Code
       - checkout
-      
+
 # Prepare the VM for NodeJS App Build
       - run: |
           echo -e "\n\n\n ### UBUNTU | NVM | NPM | NODE_JS ###"
@@ -103,9 +110,6 @@ workflows:
                 - /fix.*/
                 - /feature.*/
                 - /dependabot.*/
-
-
-
 
 ### END ###
 
