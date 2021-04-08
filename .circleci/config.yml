@@ -56,6 +56,7 @@ jobs:
 
 # AWS ECR Integration: Build and Push Docker Image to ECR
       - aws-ecr/build-and-push-image:
+          checkout: false  # Checkout already done in previous step
           aws-access-key-id: ECR_AWS_ACCESS_KEY_ID
           aws-secret-access-key: ECR_AWS_SECRET_ACCESS_KEY
           account-url: AWS_ECR_ACCOUNT_URL
@@ -64,7 +65,7 @@ jobs:
           repo: cci-repos2
           dockerfile: Dockerfile
           no-output-timeout: 21m
-          skip-when-tags-exist: false
+          skip-when-tags-exist: false # Don't Skip
           tag: 'latest,$CCI_BRANCH.$CIRCLE_BUILD_NUM'
 
 
