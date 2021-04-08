@@ -49,7 +49,7 @@ jobs:
           name: Set CCI_BRANCH_NAME
           command: CCI_BRANCH_NAME=$(echo $CIRCLE_BRANCH | sed -e 's/\//-/g'); echo "export CCI_BRANCH=$CCI_BRANCH_NAME" >> $BASH_ENV
 
-# Print CCI_BRANCH to use with ECR/DOCKER - Verify
+# Print CCI_BRANCH to use with ECR/DOCKER - Verify CircleCI Task
       - run:
           name: Get CCI_BRANCH_NAME
           command: echo "CCI_BRANCH=$CCI_BRANCH"
@@ -63,7 +63,7 @@ jobs:
           profile-name: profile
           repo: cci-repos2
           dockerfile: Dockerfile
-          no-output-timeout: 20m
+          no-output-timeout: 21m
           skip-when-tags-exist: false
           tag: 'latest,$CCI_BRANCH.$CIRCLE_BUILD_NUM'
 
@@ -78,7 +78,7 @@ jobs:
           service-name: cci-service-lb-homes-site
           family: test-homes-site
           container-image-name-updates: "container=cci-container4,tag=latest"
-          skip-task-definition-registration: false
+          skip-task-definition-registration: false # Don't Skip
           force-new-deployment: true
           verify-revision-is-deployed: true
           verification-timeout: 9m
