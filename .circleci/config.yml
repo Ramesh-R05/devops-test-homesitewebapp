@@ -47,12 +47,12 @@ jobs:
 # SET CCI_BRANCH to use with ECR/DOCKER
       - run:
           name: SET ENV - BRANCH_NAME
-          command: CCI_BRANCH_NAME=$(echo $CIRCLE_BRANCH | sed -e 's/\//-/g'); echo "export CCI_BRANCH=$CCI_BRANCH_NAME" >> $BASH_ENV
+          command: CCI_BRANCH_NAME=$(echo $CIRCLE_BRANCH | sed -e 's/\//-/g'); echo "export CCI_BRANCH=$CCI_BRANCH_NAME" >> $BASH_ENV; printenv; 
 
 # Print CCI_BRANCH to use with ECR/DOCKER - Verify
       - run:
           name: GET ENV - BRANCH_NAME
-          command: env | grep -i CCI* ; env | grep -i ENV_B*
+          command: echo $CCI_BRANCH ; echo $ENV_BUILD
 
 # AWS ECR Integration: Build and Push Docker Image to ECR
 #      - aws-ecr/build-and-push-image:
