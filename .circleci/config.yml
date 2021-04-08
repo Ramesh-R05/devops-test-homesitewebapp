@@ -21,9 +21,8 @@ executors:
 # JOBS
 
 jobs:
-
   ecr-buildandpush-dockerimage:
-    executors: my-executor
+    executor: my-executor
     steps:
       - checkout
 # Prepare the VM for NodeJS App Build
