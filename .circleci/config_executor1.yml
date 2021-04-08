@@ -10,19 +10,16 @@ orbs:
   aws-ecr: circleci/aws-ecr@6.15.3
   aws-ecs: circleci/aws-ecs@2.1.0
 
-# EXECUTOR
-
-executors:
-  my-executor:
-    machine:
-      image: ubuntu-1604:202010-01
-    working_directory: ~/homes-site
 
 # JOBS
 
 jobs:
   ecr-buildandpush-dockerimage:
-    executor: my-executor
+    environment:
+      ENV_BUILD: TEST
+    machine:
+      image: ubuntu-1604:202010-01
+    working_directory: ~/homes-site
     steps:
       - checkout
 # Prepare the VM for NodeJS App Build
@@ -56,7 +53,7 @@ jobs:
 # Print CCI_BRANCH to use with ECR/DOCKER - Verify
       - run:
           name: GET ENV - BRANCH_NAME
-          command: env | grep -i cci
+          command: env | grep -i CCI* ; env | grep -i ENV*
 
 # AWS ECR Integration: Build and Push Docker Image to ECR
       - aws-ecr/build-and-push-image:
