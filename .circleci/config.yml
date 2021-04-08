@@ -19,9 +19,7 @@ jobs:
     working_directory: ~/homes-site
     steps:
       - checkout
-      - run: |
-
-
+      
 # Prepare the VM for NodeJS App Build
       - run: |
           echo -e "\n\n\n ### UBUNTU | NVM | NPM | NODE_JS ###"
