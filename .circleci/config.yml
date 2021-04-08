@@ -22,29 +22,6 @@ jobs:
     working_directory: ~/homes-site
     steps:
       - checkout
-# Prepare the VM for NodeJS App Build
-      - run:
-          name: "Install | NVM | NPM | NODE_JS"
-          command: |
-                echo -e "\n\n\n ### UBUNTU | NVM | NPM | NODE_JS "
-                cd src; pwd;
-                echo -e "\n ### Install NVM (Node Version Manager) # Installer for NodeJS + NPM "
-                curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
-                source ~/.profile
-                echo -e "\n ### Install NVM v10.19.0 "
-                nvm install v10.19.0
-                echo -e "\n ### Setting Default NVM v10.19.0 "
-                nvm use v10.19.0;
-                echo -e "\n ### Setting NPM Registry as BXM "
-                npm set @bxm:registry http://npm.digital.bauer-media.net.au
-                echo -e "\n ### Print Version Information "
-                echo -e "\n ### NVM Version  : $(nvm --version)"
-                echo -e "\n ### NPM Version  : $(npm --version)"
-                echo -e "\n ### Node Version : $(node --version)"
-                npm install
-                npm rebuild node-sass --force
-                npm run test:ci
-                NODE_ENV=production npm run build
 
 # SET CCI_BRANCH to use with ECR/DOCKER
       - run:
@@ -53,38 +30,19 @@ jobs:
 
 # Print CCI_BRANCH to use with ECR/DOCKER - Verify
       - run:
-          name: GET ENV - BRANCH_NAME
-          command: echo "CCI_BRANCH_NAME=$CCI_BRANCH" ; echo "ENV_BUILD=$ENV_BUILD"; echo -e "\n\n\n"; printenv;
+          name: Get Env Build - TEST | SIT | PROD
+          command: echo "CCI_BRANCH_NAME=$CCI_BRANCH" ; echo "ENV_BUILD=$ENV_BUILD";
 
-# AWS ECR Integration: Build and Push Docker Image to ECR
-#      - aws-ecr/build-and-push-image:
-#          aws-access-key-id: ECR_AWS_ACCESS_KEY_ID
-#          aws-secret-access-key: ECR_AWS_SECRET_ACCESS_KEY
-#          account-url: AWS_ECR_ACCOUNT_URL
-#          region: AWS_DEFAULT_REGION
-#          profile-name: profile
-#          repo: cci-repos2
-#          dockerfile: Dockerfile
-#          no-output-timeout: 20m
-#          skip-when-tags-exist: false
-#          tag: 'latest,$CCI_BRANCH.$CIRCLE_BUILD_NUM'
 
 # AWS ECS Integration: Create a task definition using JSON: path-to/json-file.json
-      - aws-ecs/update-task-definition-from-json:
-          task-definition-json: task-def-$ENV_BUILD.json
-
-# AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR | Deploy-NodeJS-APP ]
-#      - aws-ecs/update-service:
-#          cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
-#          service-name: cci-service-lb-homes-site
-#          family: test-homes-site
-#          container-image-name-updates: "container=cci-container4,tag=latest"
-#          skip-task-definition-registration: false
-#          force-new-deployment: true
-#          verify-revision-is-deployed: true
-#          verification-timeout: 9m
-#          max-poll-attempts: 10
-#          poll-interval: 120
+      - run:
+          name: Use Task Def - Env Specific
+          command: |
+                if [ "$ENV_BUILD" = "TEST" ]; then
+                    echo "ENV_BUILD=$ENV_BUILD" ; echo "CCI_BRANCH_NAME=$CCI_BRANCH" ;
+                fi
+#      - aws-ecs/update-task-definition-from-json:
+#          task-definition-json: task-def-$ENV_BUILD.json
 
 # WORKFLOWS
 
@@ -105,6 +63,60 @@ workflows:
                 - /dependabot.*/
 
 ### END ###
+
+
+# AWS ECR Integration: Build and Push Docker Image to ECR
+#      - aws-ecr/build-and-push-image:
+#          aws-access-key-id: ECR_AWS_ACCESS_KEY_ID
+#          aws-secret-access-key: ECR_AWS_SECRET_ACCESS_KEY
+#          account-url: AWS_ECR_ACCOUNT_URL
+#          region: AWS_DEFAULT_REGION
+#          profile-name: profile
+#          repo: cci-repos2
+#          dockerfile: Dockerfile
+#          no-output-timeout: 20m
+#          skip-when-tags-exist: false
+#          tag: 'latest,$CCI_BRANCH.$CIRCLE_BUILD_NUM'
+
+
+# Prepare the VM for NodeJS App Build
+#      - run:
+#          name: "Install | NVM | NPM | NODE_JS"
+#          command: |
+#                echo -e "\n\n\n ### UBUNTU | NVM | NPM | NODE_JS "
+#                cd src; pwd;
+#                echo -e "\n ### Install NVM (Node Version Manager) # Installer for NodeJS + NPM "
+#                curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+#                source ~/.profile
+#                echo -e "\n ### Install NVM v10.19.0 "
+#                nvm install v10.19.0
+#                echo -e "\n ### Setting Default NVM v10.19.0 "
+#                nvm use v10.19.0;
+#                echo -e "\n ### Setting NPM Registry as BXM "
+#                npm set @bxm:registry http://npm.digital.bauer-media.net.au
+#                echo -e "\n ### Print Version Information "
+#                echo -e "\n ### NVM Version  : $(nvm --version)"
+#                echo -e "\n ### NPM Version  : $(npm --version)"
+#                echo -e "\n ### Node Version : $(node --version)"
+#                npm install
+#                npm rebuild node-sass --force
+#                npm run test:ci
+#                NODE_ENV=production npm run build
+
+
+# AWS ECS Integration: [ Cluster | Service | Task | PullImage-ECR | Deploy-NodeJS-APP ]
+#      - aws-ecs/update-service:
+#          cluster-name: arn:aws:ecs:ap-southeast-2:014901580825:cluster/cci-app-ecs
+#          service-name: cci-service-lb-homes-site
+#          family: test-homes-site
+#          container-image-name-updates: "container=cci-container4,tag=latest"
+#          skip-task-definition-registration: false
+#          force-new-deployment: true
+#          verify-revision-is-deployed: true
+#          verification-timeout: 9m
+#          max-poll-attempts: 10
+#          poll-interval: 120
+
 
 #          echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
 #          echo -e "\n ### This is pipeline ID << pipeline.id >> # << pipeline.git.branch >>"
