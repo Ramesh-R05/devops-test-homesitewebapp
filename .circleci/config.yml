@@ -26,11 +26,11 @@ jobs:
 
 # Set and Print CCI_BRANCH to use with ECR/DOCKER - Verify CircleCI Task
       - run:
-          name: Print Env Vars - Branch_Name | ENV | HOMES-SITE
+          name: Print Env Vars - ENV_TYPE | Branch_Name | HOMES-SITE
           command: |
                 CCI_BRANCH_NAME=$(echo $CIRCLE_BRANCH | sed -e 's/\//-/g');
                 echo "export CCI_BRANCH=$CCI_BRANCH_NAME" >> $BASH_ENV;
-                echo "CCI_BRANCH=$CCI_BRANCH";
+                echo "CCI_BRANCH=$CCI_BRANCH_NAME";
 
 # Prepare the VM for NodeJS App Build
       - run:
