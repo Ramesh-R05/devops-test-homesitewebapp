@@ -14,11 +14,23 @@ orbs:
 
 jobs:
   ecr-buildandpush-dockerimage:
+    environment:
+      APP_KEY=homes-site
+      APP_STUBBED=true
     machine:
       image: ubuntu-1604:202010-01
     working_directory: ~/homes-site
     steps:
+# Code Checkout - Build
       - checkout
+
+# Set and Print CCI_BRANCH to use with ECR/DOCKER - Verify CircleCI Task
+      - run:
+          name: Print Env Vars:  Branch_Name | ENV | HOMES-SITE
+          command: |
+                CCI_BRANCH_NAME=$(echo $CIRCLE_BRANCH | sed -e 's/\//-/g');
+                echo "export CCI_BRANCH=$CCI_BRANCH_NAME" >> $BASH_ENV;
+                echo "CCI_BRANCH=$CCI_BRANCH";
 
 # Prepare the VM for NodeJS App Build
       - run:
@@ -44,16 +56,6 @@ jobs:
                 npm run test:ci
                 NODE_ENV=production npm run build
 
-# SET CCI_BRANCH to use with ECR/DOCKER
-      - run:
-          name: Set CCI_BRANCH_NAME
-          command: CCI_BRANCH_NAME=$(echo $CIRCLE_BRANCH | sed -e 's/\//-/g'); echo "export CCI_BRANCH=$CCI_BRANCH_NAME" >> $BASH_ENV
-
-# Print CCI_BRANCH to use with ECR/DOCKER - Verify CircleCI Task
-      - run:
-          name: Get CCI_BRANCH_NAME
-          command: echo "CCI_BRANCH=$CCI_BRANCH"
-
 # AWS ECR Integration: Build and Push Docker Image to ECR
       - aws-ecr/build-and-push-image:
           checkout: false  # Checkout already done in previous step
@@ -67,7 +69,6 @@ jobs:
           no-output-timeout: 21m
           skip-when-tags-exist: false # Don't Skip
           tag: 'latest,$CCI_BRANCH.$CIRCLE_BUILD_NUM'
-
 
 # AWS ECS Integration: Create a task definition using JSON: path-to/json-file.json
       - aws-ecs/update-task-definition-from-json:
