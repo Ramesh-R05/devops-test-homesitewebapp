@@ -65,6 +65,7 @@ jobs:
           region: AWS_DEFAULT_REGION
           profile-name: profile
           repo: cci-repos2
+          create-repo: true
           repo-scan-on-push: false
           dockerfile: Dockerfile
           no-output-timeout: 21m
